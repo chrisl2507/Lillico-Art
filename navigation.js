@@ -1,9 +1,9 @@
-/* Lillico Art — Navigation & Reveal Animations */
+/* Lillico Art — Navigation, Scroll & Reveal Animations */
 (function () {
   /* ---- Mobile Navigation ---- */
-  const toggle = document.querySelector('.nav-toggle');
-  const menu = document.querySelector('.nav-menu');
-  const links = document.querySelectorAll('.nav-link');
+  var toggle = document.querySelector('.nav-toggle');
+  var menu = document.querySelector('.nav-menu');
+  var links = document.querySelectorAll('.nav-link');
 
   if (toggle && menu) {
     function openNav() {
@@ -42,6 +42,27 @@
     });
   }
 
+  /* ---- Nav scroll behaviour ---- */
+  /* On pages with a hero, nav starts transparent and gains .scrolled on scroll.
+     On interior pages (body.page-interior), nav is always dark via CSS. */
+  var nav = document.querySelector('nav');
+  var hero = document.querySelector('.hero') || document.querySelector('.gallery-featured');
+
+  if (nav && hero && !document.body.classList.contains('page-interior')) {
+    var scrollThreshold = 80;
+
+    function onScroll() {
+      if (window.scrollY > scrollThreshold) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
   /* ---- Intersection Observer for reveal animations ---- */
   var revealElements = document.querySelectorAll('.reveal');
   if (revealElements.length > 0) {
@@ -52,7 +73,7 @@
           revealObserver.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
 
     revealElements.forEach(function (el) {
       revealObserver.observe(el);
@@ -74,6 +95,7 @@
     function openLightbox(index) {
       currentIndex = index;
       var item = galleryItems[index];
+      if (!item) return;
       var img = item.querySelector('img');
       var title = item.querySelector('.gallery-item-title');
       var category = item.querySelector('.gallery-item-category');
@@ -91,14 +113,28 @@
       document.body.style.overflow = '';
     }
 
+    function getVisibleItems() {
+      var visible = [];
+      galleryItems.forEach(function (item, i) {
+        if (item.style.display !== 'none') visible.push(i);
+      });
+      return visible;
+    }
+
     function showPrev() {
-      currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
-      openLightbox(currentIndex);
+      var visible = getVisibleItems();
+      if (visible.length === 0) return;
+      var pos = visible.indexOf(currentIndex);
+      var prevPos = (pos - 1 + visible.length) % visible.length;
+      openLightbox(visible[prevPos]);
     }
 
     function showNext() {
-      currentIndex = (currentIndex + 1) % galleryItems.length;
-      openLightbox(currentIndex);
+      var visible = getVisibleItems();
+      if (visible.length === 0) return;
+      var pos = visible.indexOf(currentIndex);
+      var nextPos = (pos + 1) % visible.length;
+      openLightbox(visible[nextPos]);
     }
 
     galleryItems.forEach(function (item, index) {
