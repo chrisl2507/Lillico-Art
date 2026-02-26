@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery — Lillico Art</title>
+  <meta name="description" content="Browse the full gallery of original charcoal portraits, graphite drawings, and mixed media artwork by Lillico Art.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <a href="index.html" class="nav-brand">Lillico</a>
+      <button class="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-menu" role="navigation">
+        <li><a href="index.html" class="nav-link">Home</a></li>
+        <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+        <li><a href="commissions.html" class="nav-link">Commissions</a></li>
+        <li><a href="about.html" class="nav-link">About</a></li>
+        <li><a href="index.html#contact" class="nav-link nav-link-cta">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Gallery Featured Piece -->
+  <div class="gallery-featured">
+    <img src="https://picsum.photos/seed/gallery-hero/1600/900" width="1600" height="900" alt="Featured charcoal portrait — The Gaze">
+  </div>
+
+  <!-- Filters -->
+  <div class="gallery-filters">
+    <button class="filter-btn active" data-filter="all">All Work</button>
+    <button class="filter-btn" data-filter="charcoal">Charcoal</button>
+    <button class="filter-btn" data-filter="graphite">Graphite</button>
+    <button class="filter-btn" data-filter="mixed-media">Mixed Media</button>
+    <button class="filter-btn" data-filter="pet">Pet Portraits</button>
+  </div>
+
+  <!-- Gallery Grid -->
+  <div class="gallery-grid">
+
+    <div class="gallery-item" data-orientation="portrait" data-category="charcoal">
+      <img src="https://picsum.photos/seed/gal1/700/900" width="700" height="900" alt="Charcoal portrait — The Glance">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-title">The Glance</span>
+        <span class="gallery-item-category">Charcoal on paper</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-orientation="landscape" data-category="charcoal">
+      <img src="https://picsum.photos/seed/gal2/1000/600" width="1000" height="600" alt="Charcoal landscape study — Reclining Form">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-title">Reclining Form</span>
+        <span class="gallery-item-category">Charcoal on paper</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="graphite">
+      <img src="https://picsum.photos/seed/gal3/600/600" width="600" height="600" alt="Graphite study — Held">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-title">Held</span>
+        <span class="gallery-item-category">Graphite on paper</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-orientation="portrait" data-category="mixed-media">
+      <img src="https://picsum.photos/seed/gal4/700/900" width="700" height="900" alt="Mixed media portrait — Study in Umber">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-title">Study in Umber</span>
+        <span class="gallery-item-category">Mixed media</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="charcoal">
+      <img src="https://picsum.photos/seed/gal5/600/600" width="600" height="600" alt="Charcoal portrait — Quiet Moment">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-title">Quiet Moment</span>
+        <span class="gallery-item-category">Charcoal on toned paper</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="graphite">
+      <img src="https://picsum.photos/seed/gal6/600/600" width="600" height="600" alt="Graphite drawing — Intertwined">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-title">Intertwined</span>
+        <span class="gallery-item-category">Graphite on paper</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-orientation="portrait" data-category="pet">
+      <img src="https://picsum.photos/seed/gal7/700/900" width="700" height="900" alt="Charcoal pet portrait — Loyal">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-title">Loyal</span>
+        <span class="gallery-item-category">Pet portrait — charcoal</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="mixed-media">
+      <img src="https://picsum.photos/seed/gal8/600/600" width="600" height="600" alt="Mixed media figure study — Emergence">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-title">Emergence</span>
+        <span class="gallery-item-category">Mixed media on toned paper</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-orientation="landscape" data-category="charcoal">
+      <img src="https://picsum.photos/seed/gal9/1000/600" width="1000" height="600" alt="Charcoal study — Two Figures">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-title">Two Figures</span>
+        <span class="gallery-item-category">Charcoal on paper</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="pet">
+      <img src="https://picsum.photos/seed/gal10/600/600" width="600" height="600" alt="Graphite pet portrait — Watchful">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-title">Watchful</span>
+        <span class="gallery-item-category">Pet portrait — graphite</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-orientation="portrait" data-category="charcoal">
+      <img src="https://picsum.photos/seed/gal11/700/900" width="700" height="900" alt="Charcoal portrait — Reflection">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-title">Reflection</span>
+        <span class="gallery-item-category">Charcoal on paper</span>
+      </div>
+    </div>
+
+    <div class="gallery-item" data-category="graphite">
+      <img src="https://picsum.photos/seed/gal12/600/600" width="600" height="600" alt="Graphite hand study — Grace">
+      <div class="gallery-item-overlay">
+        <span class="gallery-item-title">Grace</span>
+        <span class="gallery-item-category">Graphite on paper</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox">
+    <button class="lightbox-close">Close</button>
+    <button class="lightbox-prev" aria-label="Previous image">&#8592;</button>
+    <button class="lightbox-next" aria-label="Next image">&#8594;</button>
+    <div class="lightbox-image-container">
+      <img src="" alt="">
+      <div class="lightbox-info">
+        <span class="lightbox-title"></span>
+        <span class="lightbox-meta"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-copy">&copy; 2025 Lillico Art. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="mailto:hello@lillicoart.com">hello@lillicoart.com</a>
+        <a href="https://www.instagram.com/lillicoart" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="navigation.js"></script>
+</body>
+</html>

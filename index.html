@@ -54,50 +54,51 @@
   </nav>
 
   <!-- Hero -->
-  <section class="hero bg-ink">
-    <div class="hero-inner">
-      <img src="includes/Images/placeholder.webp" alt="Featured charcoal portrait artwork by Lillico Art" width="1200" height="800" class="hero-image">
-      <div class="hero-content">
-        <h1 class="hero-title">Lillico</h1>
-        <p class="hero-tagline">Portraits drawn by hand. Art made to last.</p>
-        <a href="gallery.html" class="btn btn-primary">View Gallery</a>
-      </div>
+  <section class="hero">
+    <img src="https://picsum.photos/seed/hero1/1600/900" width="1600" height="900" alt="Featured charcoal portrait artwork by Lillico Art" class="hero-image">
+    <div class="hero-content">
+      <p class="hero-label label">Original Hand-Drawn Portraiture</p>
+      <h1 class="hero-title">Portraits drawn by hand. Art made to last.</h1>
+      <a href="gallery.html" class="hero-cta">View Gallery</a>
     </div>
   </section>
 
   <!-- Featured Work -->
-  <section class="section bg-paper">
+  <section class="section">
     <div class="section-inner">
-      <h2 class="featured-heading">Selected Work</h2>
+      <p class="label reveal">Selected Work</p>
+      <h2 class="featured-heading reveal reveal-delay-1">Recent Pieces</h2>
       <div class="featured-grid">
 
-        <a href="gallery.html" class="featured-piece">
-          <div class="featured-image-wrap">
-            <img src="includes/Images/placeholder.webp" alt="Charcoal portrait of a woman looking over her shoulder" width="800" height="1000">
-          </div>
-          <div class="featured-info">
-            <h3>The Glance</h3>
-            <p class="featured-meta">Charcoal on paper &middot; 42 &times; 59cm</p>
+        <a href="gallery.html" class="featured-item reveal">
+          <img src="https://picsum.photos/seed/portrait1/700/900" width="700" height="900" alt="Charcoal portrait of a woman looking over her shoulder">
+          <div class="featured-caption">
+            <span class="featured-caption-title">The Glance</span>
+            <span class="featured-caption-meta">Charcoal on paper</span>
           </div>
         </a>
 
-        <a href="gallery.html" class="featured-piece">
-          <div class="featured-image-wrap">
-            <img src="includes/Images/placeholder.webp" alt="Graphite drawing of hands clasped together" width="800" height="1000">
-          </div>
-          <div class="featured-info">
-            <h3>Held</h3>
-            <p class="featured-meta">Graphite on paper &middot; 30 &times; 42cm</p>
+        <a href="gallery.html" class="featured-item reveal reveal-delay-1">
+          <img src="https://picsum.photos/seed/portrait2/700/900" width="700" height="900" alt="Graphite drawing of hands clasped together">
+          <div class="featured-caption">
+            <span class="featured-caption-title">Held</span>
+            <span class="featured-caption-meta">Graphite on paper</span>
           </div>
         </a>
 
-        <a href="gallery.html" class="featured-piece">
-          <div class="featured-image-wrap">
-            <img src="includes/Images/placeholder.webp" alt="Mixed media portrait study in warm tones" width="800" height="1000">
+        <a href="gallery.html" class="featured-item reveal reveal-delay-2">
+          <img src="https://picsum.photos/seed/portrait3/700/900" width="700" height="900" alt="Mixed media portrait study in warm tones">
+          <div class="featured-caption">
+            <span class="featured-caption-title">Study in Umber</span>
+            <span class="featured-caption-meta">Mixed media</span>
           </div>
-          <div class="featured-info">
-            <h3>Study in Umber</h3>
-            <p class="featured-meta">Mixed media on toned paper &middot; 50 &times; 70cm</p>
+        </a>
+
+        <a href="gallery.html" class="featured-item reveal reveal-delay-3">
+          <img src="https://picsum.photos/seed/portrait4/700/900" width="700" height="900" alt="Charcoal figure study on toned paper">
+          <div class="featured-caption">
+            <span class="featured-caption-title">Quiet Moment</span>
+            <span class="featured-caption-meta">Charcoal on toned paper</span>
           </div>
         </a>
 
@@ -106,54 +107,59 @@
   </section>
 
   <!-- About Snippet -->
-  <section class="section bg-canvas">
+  <section class="section" style="background: var(--canvas);">
     <div class="section-inner about-snippet">
-      <div class="about-snippet-image">
-        <img src="includes/Images/placeholder.webp" alt="Portrait photo of the artist at work in the studio" width="600" height="750">
+      <div class="about-snippet-image reveal">
+        <img src="https://picsum.photos/seed/artist/400/400" width="400" height="400" alt="Portrait photo of the artist at work in the studio">
       </div>
-      <div class="about-snippet-text">
-        <h2>The Artist</h2>
+      <div class="about-snippet-text reveal reveal-delay-1">
+        <p class="label">The Artist</p>
+        <h2>Drawing What Words Cannot</h2>
         <p>Lillico Art is the studio of a UK-based artist specialising in hand-drawn portraiture. Working primarily in charcoal and graphite, each piece is crafted to capture not just a likeness, but a feeling.</p>
         <p>Every commission begins with a conversation and ends with something worth framing.</p>
-        <a href="about.html" class="text-link">More about the artist &rarr;</a>
+        <a href="about.html" class="btn-primary">More About the Artist</a>
       </div>
     </div>
   </section>
 
   <!-- Commission CTA -->
-  <section class="section bg-ink commission-cta">
-    <div class="section-inner text-center">
-      <h2>Commission a Portrait</h2>
-      <p class="commission-cta-text">A hand-drawn portrait is one of the most personal gifts you can give. Whether it's a loved one, a pet, or a moment worth preserving, every piece is made with care from start to finish.</p>
-      <a href="commissions.html" class="btn btn-primary">Learn More</a>
+  <section class="section-dark commission-cta text-center">
+    <div class="section-inner">
+      <div class="divider divider--center"></div>
+      <h2 class="reveal">Commission a Portrait</h2>
+      <p class="commission-cta-text reveal reveal-delay-1">A hand-drawn portrait is one of the most personal gifts you can give. Whether it's a loved one, a pet, or a moment worth preserving, every piece is made with care from start to finish.</p>
+      <a href="commissions.html" class="btn-primary btn-primary--light reveal reveal-delay-2">Learn More</a>
     </div>
   </section>
 
   <!-- Contact Form -->
-  <section class="section bg-paper" id="contact">
+  <section class="section" id="contact">
     <div class="section-narrow">
-      <h2 class="text-center">Get in Touch</h2>
-      <p class="contact-intro text-center">Have a question or ready to commission? Send a message and I'll get back to you within 48 hours.</p>
+      <div class="text-center">
+        <p class="label reveal">Get in Touch</p>
+        <h2 class="reveal reveal-delay-1">Start a Conversation</h2>
+        <p class="contact-intro reveal reveal-delay-2">Have a question or ready to commission? Send a message and I'll get back to you within 48 hours.</p>
+      </div>
 
-      <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+      <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="contact-form">
         <input type="hidden" name="form-name" value="contact">
         <p class="sr-only">
           <label>Don't fill this out if you're human: <input name="bot-field"></label>
         </p>
 
         <div class="form-group">
-          <label for="name" class="form-label">Name</label>
-          <input type="text" id="name" name="name" class="form-input" required autocomplete="name">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required autocomplete="name">
         </div>
 
         <div class="form-group">
-          <label for="email" class="form-label">Email</label>
-          <input type="email" id="email" name="email" class="form-input" required autocomplete="email">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" required autocomplete="email">
         </div>
 
         <div class="form-group">
-          <label for="commission-type" class="form-label">Commission Type</label>
-          <select id="commission-type" name="commission-type" class="form-select" required>
+          <label for="commission-type">Commission Type</label>
+          <select id="commission-type" name="commission-type" required>
             <option value="" disabled selected>Select a type</option>
             <option value="Portrait">Portrait</option>
             <option value="Pet Portrait">Pet Portrait</option>
@@ -164,22 +170,22 @@
         </div>
 
         <div class="form-group">
-          <label for="message" class="form-label">Message</label>
-          <textarea id="message" name="message" class="form-textarea" required placeholder="Tell me about what you have in mind..."></textarea>
+          <label for="message">Message</label>
+          <textarea id="message" name="message" required placeholder="Tell me about what you have in mind..."></textarea>
         </div>
 
         <div class="form-group">
-          <label for="timeline" class="form-label">Timeline</label>
-          <input type="text" id="timeline" name="timeline" class="form-input" placeholder="e.g. Birthday in June" autocomplete="off">
+          <label for="timeline">Timeline</label>
+          <input type="text" id="timeline" name="timeline" placeholder="e.g. Birthday in June" autocomplete="off">
         </div>
 
-        <button type="submit" class="btn btn-primary">Send Message</button>
+        <button type="submit" class="btn-submit">Send Message</button>
       </form>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="site-footer bg-ink">
+  <footer class="site-footer">
     <div class="footer-inner">
       <p class="footer-copy">&copy; 2025 Lillico Art. All rights reserved.</p>
       <div class="footer-links">
