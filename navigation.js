@@ -1,67 +1,344 @@
-/* Lillico Art — Navigation, Scroll, Reveal, Page Transitions & Gallery */
+/* ============================================
+   Lillico Art — Navigation, Lenis, GSAP,
+   Opening Sequence, Gallery, Page Transitions
+   ============================================ */
 (function () {
-  /* ---- Mobile Navigation ---- */
+  'use strict';
+
+  var isMobile = window.innerWidth <= 768;
+
+  /* ============================================
+     LENIS — Smooth scroll (desktop only)
+     ============================================ */
+  var lenis = null;
+
+  if (!isMobile && typeof Lenis !== 'undefined') {
+    lenis = new Lenis({
+      duration: 1.4,
+      easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+      smooth: true
+    });
+
+    // Connect Lenis to GSAP ticker
+    gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
+    gsap.ticker.lagSmoothing(0);
+
+    // ScrollTrigger proxy for Lenis
+    ScrollTrigger.scrollerProxy(document.body, {
+      scrollTop: function (value) {
+        if (arguments.length) {
+          lenis.scrollTo(value, { immediate: true });
+          return;
+        }
+        return lenis.scroll;
+      },
+      getBoundingClientRect: function () {
+        return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+      }
+    });
+
+    lenis.on('scroll', ScrollTrigger.update);
+  } else {
+    // No Lenis — just keep ScrollTrigger updated
+    if (typeof gsap !== 'undefined') {
+      gsap.ticker.add(function () { ScrollTrigger.update(); });
+    }
+  }
+
+
+  /* ============================================
+     MOBILE NAVIGATION
+     ============================================ */
   var toggle = document.querySelector('.nav-toggle');
   var menu = document.querySelector('.nav-menu');
-  var links = document.querySelectorAll('.nav-link');
+  var navLinks = document.querySelectorAll('.nav-link');
 
   if (toggle && menu) {
     function openNav() {
       toggle.setAttribute('aria-expanded', 'true');
       menu.classList.add('is-open');
       document.body.classList.add('nav-open');
+      if (lenis) lenis.stop();
     }
 
     function closeNav() {
       toggle.setAttribute('aria-expanded', 'false');
       menu.classList.remove('is-open');
       document.body.classList.remove('nav-open');
+      if (lenis) lenis.start();
     }
 
     toggle.addEventListener('click', function () {
       var isOpen = toggle.getAttribute('aria-expanded') === 'true';
-      if (isOpen) {
-        closeNav();
-      } else {
-        openNav();
-      }
+      isOpen ? closeNav() : openNav();
     });
 
     document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') {
-        closeNav();
-      }
+      if (e.key === 'Escape') closeNav();
     });
 
-    links.forEach(function (link) {
+    navLinks.forEach(function (link) {
       link.addEventListener('click', function () {
-        if (window.innerWidth < 768) {
-          closeNav();
-        }
+        if (window.innerWidth < 768) closeNav();
       });
     });
   }
 
-  /* ---- Nav scroll behaviour ---- */
-  var nav = document.querySelector('nav');
-  var hero = document.querySelector('.hero') || document.querySelector('.gallery-statement');
 
-  if (nav && hero && !document.body.classList.contains('page-interior')) {
-    var scrollThreshold = 80;
+  /* ============================================
+     PAGE TRANSITIONS — GSAP fade
+     ============================================ */
 
-    function onScroll() {
-      if (window.scrollY > scrollThreshold) {
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
-      }
-    }
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
+  // Fade in on every page
+  if (typeof gsap !== 'undefined' && !document.body.classList.contains('home')) {
+    gsap.fromTo(document.body,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.5, ease: 'power2.out', clearProps: 'opacity' }
+    );
   }
 
-  /* ---- Intersection Observer for reveal animations ---- */
+  // Fade out on link click
+  document.querySelectorAll('a[href]').forEach(function (link) {
+    var href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto')) return;
+
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (typeof gsap !== 'undefined') {
+        gsap.to(document.body, {
+          opacity: 0,
+          duration: 0.35,
+          ease: 'power2.in',
+          onComplete: function () { window.location.href = href; }
+        });
+      } else {
+        window.location.href = href;
+      }
+    });
+  });
+
+
+  /* ============================================
+     HOMEPAGE OPENING SEQUENCE (GSAP)
+     ============================================ */
+  if (document.body.classList.contains('home') && typeof gsap !== 'undefined') {
+    var heroImg = document.querySelector('.hero-image');
+    var heroGradient = document.querySelector('.hero-gradient');
+    var navBrand = document.querySelector('.nav-brand');
+    var heroEyebrow = document.querySelector('.hero-eyebrow');
+    var heroTitle = document.querySelector('.hero-title');
+    var heroCta = document.querySelector('.hero-cta');
+    var navMenu = document.querySelector('.nav-menu');
+
+    // Set initial hidden states
+    gsap.set(document.body, { opacity: 1 });
+    gsap.set([heroImg, heroGradient, navBrand, heroEyebrow, heroTitle, heroCta, navMenu], { opacity: 0 });
+    gsap.set([navBrand, heroEyebrow, heroTitle, heroCta], { y: 14 });
+
+    var runOpeningSequence = function () {
+      var tl = gsap.timeline();
+
+      tl.to(heroImg, { opacity: 1, duration: 1.4, ease: 'power2.out' }, 0)
+        .to(heroGradient, { opacity: 1, duration: 1, ease: 'power2.out' }, 0.6)
+        .to(navBrand, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 1.0)
+        .to(heroEyebrow, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 1.4)
+        .to(heroTitle, { opacity: 1, y: 0, duration: 1.0, ease: 'power3.out' }, 1.7)
+        .to(heroCta, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 2.2)
+        .to(navMenu, { opacity: 1, duration: 0.6, ease: 'power3.out' }, 2.3);
+    };
+
+    // Preload hero image, then run sequence
+    var preloader = new Image();
+    preloader.onload = runOpeningSequence;
+    preloader.onerror = runOpeningSequence;
+    preloader.src = heroImg.src;
+  }
+
+
+  /* ============================================
+     SCROLL-LINKED ANIMATIONS (GSAP + ScrollTrigger)
+     ============================================ */
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+
+    // --- Hero parallax (homepage) ---
+    if (document.querySelector('.hero') && document.body.classList.contains('home')) {
+      gsap.to('.hero-image', {
+        yPercent: 25,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.hero',
+          start: 'top top',
+          end: 'bottom top',
+          scrub: isMobile ? false : true
+        }
+      });
+    }
+
+    // --- Nav background on scroll ---
+    if (!document.body.classList.contains('page-interior')) {
+      ScrollTrigger.create({
+        start: 'top -80',
+        onUpdate: function (self) {
+          var navEl = document.querySelector('nav');
+          if (!navEl) return;
+          if (self.progress > 0) {
+            navEl.classList.add('scrolled');
+          } else {
+            navEl.classList.remove('scrolled');
+          }
+        }
+      });
+    }
+
+    // --- Composition split animations ---
+    if (document.querySelector('.composition-split')) {
+      gsap.from('.composition-split__image img', {
+        scale: 1.08,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.composition-split',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: isMobile ? false : 1.5
+        }
+      });
+
+      gsap.from('.composition-heading', {
+        x: -40,
+        opacity: 0,
+        ease: 'power3.out',
+        duration: 1,
+        scrollTrigger: {
+          trigger: '.composition-split',
+          start: 'top 75%',
+          toggleActions: 'play none none none'
+        }
+      });
+
+      gsap.from('.text-cta', {
+        opacity: 0,
+        y: 20,
+        ease: 'power3.out',
+        duration: 0.8,
+        scrollTrigger: {
+          trigger: '.composition-split',
+          start: 'top 60%',
+          toggleActions: 'play none none none'
+        }
+      });
+    }
+
+    // --- Portrait statement — clip-path wipe reveal ---
+    gsap.utils.toArray('.portrait-statement__inner').forEach(function (el) {
+      gsap.from(el, {
+        clipPath: 'inset(100% 0% 0% 0%)',
+        ease: 'power4.inOut',
+        duration: 1.4,
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 65%',
+          toggleActions: 'play none none none'
+        }
+      });
+    });
+
+    // --- Portrait captions fade in ---
+    gsap.utils.toArray('.portrait-statement__caption').forEach(function (el) {
+      gsap.from(el, {
+        opacity: 0,
+        y: 15,
+        ease: 'power3.out',
+        duration: 0.8,
+        delay: 0.6,
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        }
+      });
+    });
+
+    // --- Text interruption reveal ---
+    if (document.querySelector('.text-interruption')) {
+      gsap.from('.text-interruption__inner > div:first-child', {
+        opacity: 0,
+        y: 30,
+        ease: 'power3.out',
+        duration: 1,
+        scrollTrigger: {
+          trigger: '.text-interruption',
+          start: 'top 70%',
+          toggleActions: 'play none none none'
+        }
+      });
+    }
+
+    // --- Process numbers — stagger on enter ---
+    gsap.utils.toArray('.process-number').forEach(function (num, i) {
+      gsap.from(num, {
+        opacity: 0,
+        y: 30,
+        delay: i * 0.12,
+        ease: 'power3.out',
+        duration: 0.8,
+        scrollTrigger: {
+          trigger: '.process-steps',
+          start: 'top 70%',
+          toggleActions: 'play none none none'
+        }
+      });
+    });
+
+    gsap.utils.toArray('.process-step h3, .process-step p').forEach(function (el, i) {
+      gsap.from(el, {
+        opacity: 0,
+        y: 15,
+        delay: i * 0.06,
+        ease: 'power3.out',
+        duration: 0.7,
+        scrollTrigger: {
+          trigger: '.process-steps',
+          start: 'top 65%',
+          toggleActions: 'play none none none'
+        }
+      });
+    });
+
+    // --- Section titles — horizontal slide in ---
+    gsap.utils.toArray('.section-title').forEach(function (title) {
+      gsap.from(title, {
+        x: -60,
+        opacity: 0,
+        ease: 'power3.out',
+        duration: 1,
+        scrollTrigger: {
+          trigger: title,
+          start: 'top 80%',
+          toggleActions: 'play none none none'
+        }
+      });
+    });
+
+    // --- Contact minimal fade ---
+    if (document.querySelector('.contact-minimal')) {
+      gsap.from('.contact-minimal__inner', {
+        opacity: 0,
+        y: 30,
+        ease: 'power3.out',
+        duration: 1,
+        scrollTrigger: {
+          trigger: '.contact-minimal',
+          start: 'top 70%',
+          toggleActions: 'play none none none'
+        }
+      });
+    }
+  }
+
+
+  /* ============================================
+     REVEAL ANIMATIONS (Intersection Observer fallback)
+     ============================================ */
   var revealElements = document.querySelectorAll('.reveal');
   if (revealElements.length > 0) {
     var revealObserver = new IntersectionObserver(function (entries) {
@@ -78,99 +355,144 @@
     });
   }
 
-  /* ---- Page Transitions — fade to black ---- */
-  document.querySelectorAll('a[href]').forEach(function (link) {
-    var href = link.getAttribute('href');
-    if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto')) return;
 
-    link.addEventListener('click', function (e) {
-      e.preventDefault();
-      document.body.style.opacity = '0';
-      document.body.style.transition = 'opacity 0.4s ease';
-      setTimeout(function () { window.location.href = href; }, 400);
-    });
-  });
+  /* ============================================
+     GALLERY — Immersive viewer (Mode 1)
+     ============================================ */
+  var immersive = document.querySelector('#gallery-immersive');
+  var gridView = document.querySelector('#gallery-grid-view');
 
-  /* ---- Gallery Lightbox ---- */
-  var lightbox = document.querySelector('.lightbox');
-  if (lightbox) {
-    var lightboxImg = lightbox.querySelector('.lightbox-image-container img');
-    var lightboxTitle = lightbox.querySelector('.lightbox-title');
-    var lightboxMeta = lightbox.querySelector('.lightbox-meta');
-    var closeBtn = lightbox.querySelector('.lightbox-close');
-    var prevBtn = lightbox.querySelector('.lightbox-prev');
-    var nextBtn = lightbox.querySelector('.lightbox-next');
-    var galleryItems = document.querySelectorAll('.gallery-item');
-    var currentIndex = 0;
+  if (immersive && typeof gsap !== 'undefined') {
+    var pieces = immersive.querySelectorAll('.gallery-piece');
+    var counter = immersive.querySelector('.gallery-current');
+    var totalEl = immersive.querySelector('.gallery-total');
+    var titleEl = immersive.querySelector('.gallery-piece-title');
+    var metaEl = immersive.querySelector('.gallery-piece-meta');
+    var currentPiece = 0;
+    var isAnimating = false;
 
-    function openLightbox(index) {
-      currentIndex = index;
-      var item = galleryItems[index];
-      if (!item) return;
-      var img = item.querySelector('img');
-      var title = item.querySelector('.gallery-item-title');
-      var category = item.querySelector('.gallery-item-category');
+    if (totalEl) totalEl.textContent = String(pieces.length).padStart(2, '0');
 
-      lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt;
-      if (lightboxTitle && title) lightboxTitle.textContent = title.textContent;
-      if (lightboxMeta && category) lightboxMeta.textContent = category.textContent;
-      lightbox.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
+    var updateInfo = function (index) {
+      var piece = pieces[index];
+      if (counter) counter.textContent = String(index + 1).padStart(2, '0');
+      if (titleEl) titleEl.textContent = piece.dataset.title || '';
+      if (metaEl) metaEl.textContent = piece.dataset.meta || '';
+    };
 
-    function closeLightbox() {
-      lightbox.classList.remove('active');
-      document.body.style.overflow = '';
-    }
+    var goTo = function (index) {
+      if (index === currentPiece || isAnimating) return;
+      isAnimating = true;
 
-    function getVisibleItems() {
-      var visible = [];
-      galleryItems.forEach(function (item, i) {
-        if (item.style.display !== 'none') visible.push(i);
+      var outgoing = pieces[currentPiece];
+      var incoming = pieces[index];
+
+      gsap.set(incoming, { opacity: 0 });
+      gsap.set(incoming.querySelector('img'), { scale: 0.94 });
+      incoming.classList.add('active');
+
+      var tl = gsap.timeline({
+        onComplete: function () {
+          outgoing.classList.remove('active');
+          gsap.set(outgoing, { opacity: 0 });
+          isAnimating = false;
+        }
       });
-      return visible;
-    }
 
-    function showPrev() {
-      var visible = getVisibleItems();
-      if (visible.length === 0) return;
-      var pos = visible.indexOf(currentIndex);
-      var prevPos = (pos - 1 + visible.length) % visible.length;
-      openLightbox(visible[prevPos]);
-    }
+      tl.to(outgoing, { opacity: 0, duration: 0.5, ease: 'power2.in' }, 0)
+        .to(outgoing.querySelector('img'), { scale: 0.96, duration: 0.5, ease: 'power2.in' }, 0)
+        .to(incoming, { opacity: 1, duration: 0.7, ease: 'power2.out' }, 0.3)
+        .to(incoming.querySelector('img'), { scale: 1, duration: 0.9, ease: 'power3.out' }, 0.3);
 
-    function showNext() {
-      var visible = getVisibleItems();
-      if (visible.length === 0) return;
-      var pos = visible.indexOf(currentIndex);
-      var nextPos = (pos + 1) % visible.length;
-      openLightbox(visible[nextPos]);
-    }
+      currentPiece = index;
+      updateInfo(index);
+    };
 
-    galleryItems.forEach(function (item, index) {
-      item.addEventListener('click', function () {
-        openLightbox(index);
-      });
-    });
+    var next = function () { goTo((currentPiece + 1) % pieces.length); };
+    var prev = function () { goTo((currentPiece - 1 + pieces.length) % pieces.length); };
 
-    if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
-    if (prevBtn) prevBtn.addEventListener('click', showPrev);
-    if (nextBtn) nextBtn.addEventListener('click', showNext);
+    var prevBtn = immersive.querySelector('.gallery-prev');
+    var nextBtn = immersive.querySelector('.gallery-next');
+    if (prevBtn) prevBtn.addEventListener('click', prev);
+    if (nextBtn) nextBtn.addEventListener('click', next);
 
-    lightbox.addEventListener('click', function (e) {
-      if (e.target === lightbox) closeLightbox();
-    });
-
+    // Keyboard nav
     document.addEventListener('keydown', function (e) {
-      if (!lightbox.classList.contains('active')) return;
-      if (e.key === 'Escape') closeLightbox();
-      if (e.key === 'ArrowLeft') showPrev();
-      if (e.key === 'ArrowRight') showNext();
+      if (!immersive || immersive.style.display === 'none') return;
+      if (gridView && gridView.classList.contains('active')) return;
+      if (e.key === 'ArrowRight') next();
+      if (e.key === 'ArrowLeft') prev();
     });
+
+    // Touch swipe
+    var touchStartX = 0;
+    immersive.addEventListener('touchstart', function (e) {
+      touchStartX = e.changedTouches[0].clientX;
+    }, { passive: true });
+
+    immersive.addEventListener('touchend', function (e) {
+      var dx = e.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 50) {
+        dx < 0 ? next() : prev();
+      }
+    }, { passive: true });
+
+    // Initialise
+    updateInfo(0);
+
+    // Fade in the gallery page
+    gsap.fromTo(document.body,
+      { opacity: 0 },
+      { opacity: 1, duration: 0.5, ease: 'power2.out', clearProps: 'opacity' }
+    );
   }
 
-  /* ---- Gallery Filters — cross-dissolve transition ---- */
+
+  /* ============================================
+     GALLERY — Mode toggle (Immersive ↔ Grid)
+     ============================================ */
+  var modeToggle = immersive ? immersive.querySelector('.gallery-mode-toggle') : null;
+  var backBtn = gridView ? gridView.querySelector('.gallery-back-btn') : null;
+
+  function switchToGrid() {
+    if (!immersive || !gridView) return;
+    gsap.to(immersive, {
+      opacity: 0, y: -30, duration: 0.4, ease: 'power2.in',
+      onComplete: function () { immersive.style.display = 'none'; }
+    });
+    gridView.style.display = 'block';
+    gsap.fromTo(gridView,
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', delay: 0.2 }
+    );
+    gridView.classList.add('active');
+    if (lenis) lenis.start();
+  }
+
+  function switchToImmersive() {
+    if (!immersive || !gridView) return;
+    gsap.to(gridView, {
+      opacity: 0, y: 30, duration: 0.4, ease: 'power2.in',
+      onComplete: function () {
+        gridView.style.display = 'none';
+        gridView.classList.remove('active');
+      }
+    });
+    immersive.style.display = '';
+    gsap.fromTo(immersive,
+      { opacity: 0, y: -30 },
+      { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', delay: 0.2 }
+    );
+    if (lenis) lenis.stop();
+  }
+
+  if (modeToggle) modeToggle.addEventListener('click', switchToGrid);
+  if (backBtn) backBtn.addEventListener('click', switchToImmersive);
+
+
+  /* ============================================
+     GALLERY — Grid filters (cross-dissolve)
+     ============================================ */
   var filterBtns = document.querySelectorAll('.filter-btn');
   if (filterBtns.length > 0) {
     var galleryGrid = document.querySelector('.gallery-grid');
@@ -183,26 +505,23 @@
 
         var filter = btn.getAttribute('data-filter');
 
-        // Fade everything out first
         items.forEach(function (item) {
           item.style.opacity = '0';
           item.style.transition = 'opacity 0.3s ease';
         });
 
-        // After fade-out, hide/show and fade back in
         setTimeout(function () {
           items.forEach(function (item) {
             var show = filter === 'all' || item.getAttribute('data-category') === filter;
             item.style.display = show ? '' : 'none';
             if (show) {
               item.style.opacity = '0';
-              setTimeout(function () {
-                item.style.opacity = '1';
-              }, 20);
+              setTimeout(function () { item.style.opacity = '1'; }, 20);
             }
           });
         }, 300);
       });
     });
   }
+
 })();
