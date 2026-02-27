@@ -8,6 +8,14 @@
   var isMobile = window.innerWidth <= 768;
 
   /* ============================================
+     FAILSAFE — If GSAP didn't load, show the page
+     ============================================ */
+  if (typeof gsap === 'undefined') {
+    document.body.style.opacity = '1';
+    document.body.style.animation = 'none';
+  }
+
+  /* ============================================
      LENIS — Smooth scroll (desktop only)
      ============================================ */
   var lenis = null;
@@ -89,11 +97,12 @@
      PAGE TRANSITIONS — GSAP fade
      ============================================ */
 
-  // Fade in on every page
+  // Fade in on every page (except home — has its own opening sequence)
   if (typeof gsap !== 'undefined' && !document.body.classList.contains('home')) {
+    document.body.style.animation = 'none';
     gsap.fromTo(document.body,
       { opacity: 0 },
-      { opacity: 1, duration: 0.5, ease: 'power2.out', clearProps: 'opacity' }
+      { opacity: 1, duration: 0.5, ease: 'power2.out' }
     );
   }
 
@@ -130,6 +139,8 @@
     var heroCta = document.querySelector('.hero-cta');
     var navMenu = document.querySelector('.nav-menu');
 
+    // Cancel CSS failsafe animation — GSAP is in control now
+    document.body.style.animation = 'none';
     // Set initial hidden states
     gsap.set(document.body, { opacity: 1 });
     gsap.set([heroImg, heroGradient, navBrand, heroEyebrow, heroTitle, heroCta, navMenu], { opacity: 0 });
@@ -441,9 +452,10 @@
     updateInfo(0);
 
     // Fade in the gallery page
+    document.body.style.animation = 'none';
     gsap.fromTo(document.body,
       { opacity: 0 },
-      { opacity: 1, duration: 0.5, ease: 'power2.out', clearProps: 'opacity' }
+      { opacity: 1, duration: 0.5, ease: 'power2.out' }
     );
   }
 
