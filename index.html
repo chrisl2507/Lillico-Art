@@ -21,14 +21,14 @@
   <!-- Critical nav CSS inlined — renders immediately -->
   <style>
     nav { position: fixed; top: 0; left: 0; right: 0; height: 64px;
-          display: flex; align-items: center; padding: 0 5%; z-index: 1000;
-          background: transparent; }
+          z-index: 1000; background: transparent; }
     .nav-brand { font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
                  font-size: 1.25rem; letter-spacing: 0.08em; text-transform: uppercase;
                  color: #fff; text-decoration: none; }
   </style>
 
-  <!-- Preload hero image -->
+  <!-- Preconnect + Preload hero image -->
+  <link rel="preconnect" href="https://picsum.photos" crossorigin>
   <link rel="preload" as="image" href="https://picsum.photos/seed/hero1/1600/900">
 
   <!-- Stylesheet -->
@@ -97,20 +97,16 @@
         Drawn from<br>observation.<br>
         <em>Made to last.</em>
       </h2>
-      <a href="commissions.html" class="text-cta">
-        Commission a portrait
-        <span class="text-cta__line"></span>
-      </a>
     </div>
     <div class="composition-split__image">
-      <img src="https://picsum.photos/seed/portrait1/800/1100" width="800" height="1100" alt="Charcoal portrait — The Glance" loading="lazy" decoding="async">
+      <img src="https://picsum.photos/seed/portrait1/600/825" width="600" height="825" alt="Charcoal portrait — The Glance" loading="lazy" decoding="async">
     </div>
   </section>
 
   <!-- PORTRAIT STATEMENT — Single image, centred, generous space -->
   <section class="portrait-statement">
     <div class="portrait-statement__inner">
-      <img src="https://picsum.photos/seed/portrait-statement/1200/1600" width="1200" height="1600" alt="Portrait Study — charcoal on Fabriano paper" loading="lazy" decoding="async">
+      <img src="https://picsum.photos/seed/portrait-statement/800/1067" width="800" height="1067" alt="Portrait Study — charcoal on Fabriano paper" loading="lazy" decoding="async">
     </div>
     <div class="portrait-statement__caption">
       <span class="portrait-title">Portrait Study — R.K.</span>
@@ -136,7 +132,7 @@
   <!-- SECOND PORTRAIT — Different aspect ratio -->
   <section class="portrait-statement">
     <div class="portrait-statement__inner">
-      <img src="https://picsum.photos/seed/portrait2-wide/1400/900" width="1400" height="900" alt="Charcoal figure study — two figures on toned paper" loading="lazy" decoding="async">
+      <img src="https://picsum.photos/seed/portrait2-wide/900/580" width="900" height="580" alt="Charcoal figure study — two figures on toned paper" loading="lazy" decoding="async">
     </div>
     <div class="portrait-statement__caption">
       <span class="portrait-title">Two Figures</span>
@@ -180,7 +176,6 @@
       <p class="label">Get in Touch</p>
       <h2>Begin.</h2>
       <a href="mailto:hello@lillicoart.com" class="contact-email">hello@lillicoart.com</a>
-      <p style="margin: 0 auto;"><a href="commissions.html" class="text-cta" style="justify-content: center;">Commission a portrait <span class="text-cta__line"></span></a></p>
       <p class="label" style="margin-top: var(--space-xl); margin-bottom: 0;">Based in Suffolk, UK</p>
     </div>
   </section>

@@ -358,12 +358,14 @@ body.page-interior nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
   max-width: 100%;
   padding: 0 5%;
   height: 64px;
 }
 
 .nav-brand {
+  flex-shrink: 0;
   font-family: 'Cormorant Garamond', 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
   font-size: 1.25rem;
   font-weight: 500;
