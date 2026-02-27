@@ -448,8 +448,42 @@
       }
     }, { passive: true });
 
+    // --- Thumbnail filmstrip ---
+    var thumbs = immersive.querySelectorAll('.gallery-thumb');
+    var thumbstrip = immersive.querySelector('.gallery-thumbstrip');
+
+    var updateThumbs = function (index) {
+      thumbs.forEach(function (t, i) {
+        if (i === index) {
+          t.classList.add('active');
+          // Scroll active thumb into view within the strip
+          if (thumbstrip) {
+            var scrollLeft = t.offsetLeft - thumbstrip.offsetWidth / 2 + t.offsetWidth / 2;
+            thumbstrip.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+          }
+        } else {
+          t.classList.remove('active');
+        }
+      });
+    };
+
+    thumbs.forEach(function (thumb) {
+      thumb.addEventListener('click', function () {
+        var idx = parseInt(thumb.getAttribute('data-index'), 10);
+        if (!isNaN(idx)) goTo(idx);
+      });
+    });
+
+    // Patch goTo to also sync thumbstrip
+    var _originalGoTo = goTo;
+    goTo = function (index) {
+      _originalGoTo(index);
+      updateThumbs(index);
+    };
+
     // Initialise
     updateInfo(0);
+    updateThumbs(0);
 
     // Fade in the gallery page
     document.body.style.animation = 'none';
