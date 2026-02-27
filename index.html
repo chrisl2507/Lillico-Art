@@ -11,6 +11,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
+  <!-- Preload hero image -->
+  <link rel="preload" as="image" href="https://picsum.photos/seed/hero1/1600/900">
+
   <!-- Stylesheet -->
   <link rel="stylesheet" href="styles.css">
 
@@ -34,7 +37,10 @@
   }
   </script>
 </head>
-<body>
+<body class="home">
+
+  <!-- Charcoal mark -->
+  <div class="page-draw" aria-hidden="true"></div>
 
   <!-- Navigation -->
   <nav>
@@ -56,9 +62,10 @@
   <!-- Hero -->
   <section class="hero">
     <img src="https://picsum.photos/seed/hero1/1600/900" width="1600" height="900" alt="Featured charcoal portrait artwork by Lillico Art" class="hero-image">
+    <div class="hero-gradient"></div>
     <div class="hero-content">
-      <p class="hero-label label">Original Hand-Drawn Portraiture</p>
-      <h1 class="hero-title">Portraits drawn by hand. Art made to last.</h1>
+      <p class="hero-label label">Charcoal Portraiture &middot; Suffolk</p>
+      <h1 class="hero-title">Drawn.</h1>
       <a href="gallery.html" class="hero-cta">View Gallery</a>
     </div>
   </section>
@@ -106,39 +113,37 @@
     </div>
   </section>
 
-  <!-- About Snippet -->
-  <section class="section" style="background: var(--canvas);">
+  <!-- About Snippet — the one light room -->
+  <section class="section section-light">
     <div class="section-inner about-snippet">
       <div class="about-snippet-image reveal">
         <img src="https://picsum.photos/seed/artist/400/400" width="400" height="400" alt="Portrait photo of the artist at work in the studio">
       </div>
       <div class="about-snippet-text reveal reveal-delay-1">
         <p class="label">The Artist</p>
-        <h2>Drawing What Words Cannot</h2>
-        <p>Lillico Art is the studio of a UK-based artist specialising in hand-drawn portraiture. Working primarily in charcoal and graphite, each piece is crafted to capture not just a likeness, but a feeling.</p>
+        <h2>Charcoal is one of the oldest media in existence.</h2>
         <p>Every commission begins with a conversation and ends with something worth framing.</p>
         <a href="about.html" class="btn-primary">More About the Artist</a>
       </div>
     </div>
   </section>
 
-  <!-- Commission CTA -->
+  <!-- Commission CTA — back into the studio -->
   <section class="section-dark commission-cta text-center">
     <div class="section-inner">
       <div class="divider divider--center"></div>
       <h2 class="reveal">Commission a Portrait</h2>
-      <p class="commission-cta-text reveal reveal-delay-1">A hand-drawn portrait is one of the most personal gifts you can give. Whether it's a loved one, a pet, or a moment worth preserving, every piece is made with care from start to finish.</p>
+      <p class="commission-cta-text reveal reveal-delay-1">A hand-drawn portrait is one of the most personal gifts you can give.</p>
       <a href="commissions.html" class="btn-primary btn-primary--light reveal reveal-delay-2">Learn More</a>
     </div>
   </section>
 
-  <!-- Contact Form -->
-  <section class="section" id="contact">
+  <!-- Contact Form — warm, approachable close -->
+  <section class="section section-canvas" id="contact">
     <div class="section-narrow">
       <div class="text-center">
         <p class="label reveal">Get in Touch</p>
-        <h2 class="reveal reveal-delay-1">Start a Conversation</h2>
-        <p class="contact-intro reveal reveal-delay-2">Have a question or ready to commission? Send a message and I'll get back to you within 48 hours.</p>
+        <h2 class="reveal reveal-delay-1">Begin.</h2>
       </div>
 
       <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="contact-form">
@@ -181,6 +186,11 @@
 
         <button type="submit" class="btn-submit">Send Message</button>
       </form>
+
+      <div style="text-align: center; margin-top: var(--space-xl);">
+        <p><a href="mailto:hello@lillicoart.com">hello@lillicoart.com</a></p>
+        <p class="label" style="margin-top: var(--space-sm);">Based in Suffolk, UK</p>
+      </div>
     </div>
   </section>
 

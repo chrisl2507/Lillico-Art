@@ -1,4 +1,4 @@
-/* Lillico Art — Navigation, Scroll & Reveal Animations */
+/* Lillico Art — Navigation, Scroll, Reveal, Page Transitions & Gallery */
 (function () {
   /* ---- Mobile Navigation ---- */
   var toggle = document.querySelector('.nav-toggle');
@@ -43,10 +43,8 @@
   }
 
   /* ---- Nav scroll behaviour ---- */
-  /* On pages with a hero, nav starts transparent and gains .scrolled on scroll.
-     On interior pages (body.page-interior), nav is always dark via CSS. */
   var nav = document.querySelector('nav');
-  var hero = document.querySelector('.hero') || document.querySelector('.gallery-featured');
+  var hero = document.querySelector('.hero') || document.querySelector('.gallery-statement');
 
   if (nav && hero && !document.body.classList.contains('page-interior')) {
     var scrollThreshold = 80;
@@ -79,6 +77,19 @@
       revealObserver.observe(el);
     });
   }
+
+  /* ---- Page Transitions — fade to black ---- */
+  document.querySelectorAll('a[href]').forEach(function (link) {
+    var href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto')) return;
+
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      document.body.style.opacity = '0';
+      document.body.style.transition = 'opacity 0.4s ease';
+      setTimeout(function () { window.location.href = href; }, 400);
+    });
+  });
 
   /* ---- Gallery Lightbox ---- */
   var lightbox = document.querySelector('.lightbox');
@@ -159,7 +170,7 @@
     });
   }
 
-  /* ---- Gallery Filters ---- */
+  /* ---- Gallery Filters — cross-dissolve transition ---- */
   var filterBtns = document.querySelectorAll('.filter-btn');
   if (filterBtns.length > 0) {
     var galleryGrid = document.querySelector('.gallery-grid');
@@ -171,13 +182,26 @@
         btn.classList.add('active');
 
         var filter = btn.getAttribute('data-filter');
+
+        // Fade everything out first
         items.forEach(function (item) {
-          if (filter === 'all' || item.getAttribute('data-category') === filter) {
-            item.style.display = '';
-          } else {
-            item.style.display = 'none';
-          }
+          item.style.opacity = '0';
+          item.style.transition = 'opacity 0.3s ease';
         });
+
+        // After fade-out, hide/show and fade back in
+        setTimeout(function () {
+          items.forEach(function (item) {
+            var show = filter === 'all' || item.getAttribute('data-category') === filter;
+            item.style.display = show ? '' : 'none';
+            if (show) {
+              item.style.opacity = '0';
+              setTimeout(function () {
+                item.style.opacity = '1';
+              }, 20);
+            }
+          });
+        }, 300);
       });
     });
   }
