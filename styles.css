@@ -87,7 +87,6 @@ img {
   height: auto;
   display: block;
   image-rendering: -webkit-optimize-contrast;
-  image-rendering: crisp-edges;
 }
 
 html {
@@ -442,12 +441,21 @@ body.page-interior nav {
 .nav-link:hover { color: var(--white); }
 .nav-link:hover::after { transform: scaleX(1); }
 
+.nav-link.active {
+  color: var(--white);
+}
+
+.nav-link.active::after {
+  transform: scaleX(1);
+}
+
 .nav-link-cta {
   color: var(--umber);
   font-weight: 500;
 }
 
 .nav-link-cta:hover { color: #a8895c; }
+.nav-link-cta.active { color: var(--umber); }
 
 /* Nav menu — mobile: full-screen overlay */
 .nav-menu {
@@ -1015,7 +1023,7 @@ body.nav-open { overflow: hidden; }
 
 .gallery-piece.active {
   opacity: 1;
-  pointer-events: all;
+  pointer-events: auto;
 }
 
 .gallery-piece img {
@@ -1636,6 +1644,7 @@ body.nav-open { overflow: hidden; }
   /* Kill all transitions for performance, re-enable selectively */
   * { transition: none !important; }
   nav { transition: background 0.3s ease !important; }
+  .nav-toggle span { transition: transform 0.3s ease, opacity 0.15s ease !important; }
   .reveal { transition: opacity 0.5s ease !important; }
   .gallery-item-overlay { transition: opacity 0.25s ease !important; }
 
