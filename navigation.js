@@ -21,34 +21,40 @@
   var lenis = null;
 
   if (!isMobile && typeof Lenis !== 'undefined') {
-    lenis = new Lenis({
-      duration: 1.4,
-      easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
-      smooth: true
-    });
+    try {
+      lenis = new Lenis({
+        duration: 1.4,
+        easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+        smooth: true
+      });
 
-    // Connect Lenis to GSAP ticker
-    gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
-    gsap.ticker.lagSmoothing(0);
+      // Connect Lenis to GSAP ticker
+      gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
 
-    // ScrollTrigger proxy for Lenis
-    ScrollTrigger.scrollerProxy(document.body, {
-      scrollTop: function (value) {
-        if (arguments.length) {
-          lenis.scrollTo(value, { immediate: true });
-          return;
-        }
-        return lenis.scroll;
-      },
-      getBoundingClientRect: function () {
-        return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+      // ScrollTrigger proxy for Lenis
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.scrollerProxy(document.body, {
+          scrollTop: function (value) {
+            if (arguments.length) {
+              lenis.scrollTo(value, { immediate: true });
+              return;
+            }
+            return lenis.scroll;
+          },
+          getBoundingClientRect: function () {
+            return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+          }
+        });
+
+        lenis.on('scroll', ScrollTrigger.update);
       }
-    });
-
-    lenis.on('scroll', ScrollTrigger.update);
+    } catch (e) {
+      lenis = null;
+    }
   } else {
     // No Lenis — just keep ScrollTrigger updated
-    if (typeof gsap !== 'undefined') {
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
       gsap.ticker.add(function () { ScrollTrigger.update(); });
     }
   }
@@ -631,5 +637,38 @@
       });
     });
   }
+
+
+  /* ============================================
+     BFCACHE — Restore visibility on back/forward
+     ============================================ */
+  window.addEventListener('pageshow', function (e) {
+    if (e.persisted) {
+      // Page was restored from bfcache — body may be at opacity 0
+      document.body.style.opacity = '1';
+      document.body.style.animation = 'none';
+      // Reveal any still-hidden elements in the viewport
+      document.querySelectorAll('.reveal:not(.visible)').forEach(function (el) {
+        var rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          el.classList.add('visible');
+        }
+      });
+    }
+  });
+
+
+  /* ============================================
+     REVEAL SAFETY NET — Catch any elements the
+     IntersectionObserver missed after 2.5 s
+     ============================================ */
+  setTimeout(function () {
+    document.querySelectorAll('.reveal:not(.visible)').forEach(function (el) {
+      var rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        el.classList.add('visible');
+      }
+    });
+  }, 2500);
 
 })();
