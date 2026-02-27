@@ -159,13 +159,21 @@ body {
   background-color: var(--ink);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* GSAP handles page fade-in — start invisible */
+  /* Start hidden — GSAP fades in. CSS animation failsafe ensures
+     body becomes visible even if CDN scripts fail to load. */
   opacity: 0;
+  animation: body-failsafe 0.4s ease 2s forwards;
 }
 
-/* Homepage — GSAP opening sequence handles visibility */
+/* Homepage — longer failsafe delay for opening sequence */
 body.home {
   opacity: 0;
+  animation: body-failsafe 0.4s ease 3.5s forwards;
+}
+
+/* Failsafe: if GSAP never fires, CSS reveals the page */
+@keyframes body-failsafe {
+  to { opacity: 1; }
 }
 
 /* --- Page-draw line — charcoal mark on load --- */
