@@ -57,6 +57,18 @@
   /* ============================================
      MOBILE NAVIGATION
      ============================================ */
+  /* ============================================
+     ACTIVE NAV LINK — highlight current page
+     ============================================ */
+  var currentPath = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-link').forEach(function (link) {
+    var linkPath = link.getAttribute('href').split('#')[0];
+    if (linkPath === currentPath) {
+      link.classList.add('active');
+    }
+  });
+
+
   var toggle = document.querySelector('.nav-toggle');
   var menu = document.querySelector('.nav-menu');
   var navLinks = document.querySelectorAll('.nav-link');
@@ -112,6 +124,31 @@
     if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto')) return;
 
     link.addEventListener('click', function (e) {
+      // Same-page anchor — smooth scroll instead of reloading
+      if (href.indexOf('#') !== -1) {
+        var parts = href.split('#');
+        var linkPage = parts[0];
+        if (linkPage === currentPath || linkPage === '') {
+          e.preventDefault();
+          var target = document.getElementById(parts[1]);
+          if (target) {
+            if (lenis) {
+              lenis.scrollTo(target);
+            } else {
+              target.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+          // Close mobile nav if open
+          if (toggle && toggle.getAttribute('aria-expanded') === 'true') {
+            toggle.setAttribute('aria-expanded', 'false');
+            menu.classList.remove('is-open');
+            document.body.classList.remove('nav-open');
+            if (lenis) lenis.start();
+          }
+          return;
+        }
+      }
+
       e.preventDefault();
       if (typeof gsap !== 'undefined') {
         gsap.to(document.body, {
@@ -533,6 +570,32 @@
 
   if (modeToggle) modeToggle.addEventListener('click', switchToGrid);
   if (backBtn) backBtn.addEventListener('click', switchToImmersive);
+
+
+  /* ============================================
+     GALLERY — Grid item click → immersive viewer
+     ============================================ */
+  if (immersive && gridView && typeof gsap !== 'undefined') {
+    var gridItems = document.querySelectorAll('.gallery-grid .gallery-item');
+    gridItems.forEach(function (item, index) {
+      item.addEventListener('click', function () {
+        // Set the correct piece before switching view
+        pieces.forEach(function (p, i) {
+          if (i === index) {
+            p.classList.add('active');
+            gsap.set(p, { opacity: 1 });
+          } else {
+            p.classList.remove('active');
+            gsap.set(p, { opacity: 0 });
+          }
+        });
+        currentPiece = index;
+        updateInfo(index);
+        updateThumbs(index);
+        switchToImmersive();
+      });
+    });
+  }
 
 
   /* ============================================
