@@ -399,7 +399,7 @@
       var incoming = pieces[index];
 
       gsap.set(incoming, { opacity: 0 });
-      gsap.set(incoming.querySelector('img'), { scale: 0.94 });
+      gsap.set(incoming.querySelector('img'), { scale: 0.97 });
       incoming.classList.add('active');
 
       var tl = gsap.timeline({
@@ -410,10 +410,9 @@
         }
       });
 
-      tl.to(outgoing, { opacity: 0, duration: 0.5, ease: 'power2.in' }, 0)
-        .to(outgoing.querySelector('img'), { scale: 0.96, duration: 0.5, ease: 'power2.in' }, 0)
-        .to(incoming, { opacity: 1, duration: 0.7, ease: 'power2.out' }, 0.3)
-        .to(incoming.querySelector('img'), { scale: 1, duration: 0.9, ease: 'power3.out' }, 0.3);
+      tl.to(outgoing, { opacity: 0, duration: 0.25, ease: 'power2.in' }, 0)
+        .to(incoming, { opacity: 1, duration: 0.35, ease: 'power2.out' }, 0.15)
+        .to(incoming.querySelector('img'), { scale: 1, duration: 0.4, ease: 'power3.out' }, 0.15);
 
       currentPiece = index;
       updateInfo(index);
@@ -503,13 +502,13 @@
   function switchToGrid() {
     if (!immersive || !gridView) return;
     gsap.to(immersive, {
-      opacity: 0, y: -30, duration: 0.4, ease: 'power2.in',
+      opacity: 0, y: -20, duration: 0.25, ease: 'power2.in',
       onComplete: function () { immersive.style.display = 'none'; }
     });
     gridView.style.display = 'block';
     gsap.fromTo(gridView,
-      { opacity: 0, y: 30 },
-      { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', delay: 0.2 }
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out', delay: 0.15 }
     );
     gridView.classList.add('active');
     if (lenis) lenis.start();
@@ -518,7 +517,7 @@
   function switchToImmersive() {
     if (!immersive || !gridView) return;
     gsap.to(gridView, {
-      opacity: 0, y: 30, duration: 0.4, ease: 'power2.in',
+      opacity: 0, y: 20, duration: 0.25, ease: 'power2.in',
       onComplete: function () {
         gridView.style.display = 'none';
         gridView.classList.remove('active');
@@ -526,8 +525,8 @@
     });
     immersive.style.display = '';
     gsap.fromTo(immersive,
-      { opacity: 0, y: -30 },
-      { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', delay: 0.2 }
+      { opacity: 0, y: -20 },
+      { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out', delay: 0.15 }
     );
     if (lenis) lenis.stop();
   }
