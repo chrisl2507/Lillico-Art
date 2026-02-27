@@ -4,12 +4,29 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Lillico Art — Original Portraits &amp; Fine Art Commissions</title>
-  <meta name="description" content="Lillico Art creates original hand-drawn portraits and fine art commissions in charcoal, graphite, and mixed media. Commission a unique piece of art today.">
+  <meta name="description" content="Lillico Art creates original hand-drawn portraits and fine art commissions in charcoal, graphite, and mixed media. Based in Suffolk, UK.">
 
   <!-- Preconnect to Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Lenis smooth scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+  <!-- Critical nav CSS inlined — renders immediately -->
+  <style>
+    nav { position: fixed; top: 0; left: 0; right: 0; height: 64px;
+          display: flex; align-items: center; padding: 0 5%; z-index: 1000;
+          background: transparent; }
+    .nav-brand { font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+                 font-size: 1.25rem; letter-spacing: 0.08em; text-transform: uppercase;
+                 color: #fff; text-decoration: none; }
+  </style>
 
   <!-- Preload hero image -->
   <link rel="preload" as="image" href="https://picsum.photos/seed/hero1/1600/900">
@@ -59,138 +76,109 @@
     </div>
   </nav>
 
-  <!-- Hero -->
+  <!-- HERO — Full viewport, portrait emerging from black -->
   <section class="hero">
     <img src="https://picsum.photos/seed/hero1/1600/900" width="1600" height="900" alt="Featured charcoal portrait artwork by Lillico Art" class="hero-image">
     <div class="hero-gradient"></div>
     <div class="hero-content">
-      <p class="hero-label label">Charcoal Portraiture &middot; Suffolk</p>
+      <p class="hero-eyebrow">Charcoal Portraiture &middot; Suffolk</p>
       <h1 class="hero-title">Drawn.</h1>
       <a href="gallery.html" class="hero-cta">View Gallery</a>
     </div>
   </section>
 
-  <!-- Featured Work -->
-  <section class="section">
-    <div class="section-inner">
-      <p class="label reveal">Selected Work</p>
-      <h2 class="featured-heading reveal reveal-delay-1">Recent Pieces</h2>
-      <div class="featured-grid">
-
-        <a href="gallery.html" class="featured-item reveal">
-          <img src="https://picsum.photos/seed/portrait1/700/900" width="700" height="900" alt="Charcoal portrait of a woman looking over her shoulder">
-          <div class="featured-caption">
-            <span class="featured-caption-title">The Glance</span>
-            <span class="featured-caption-meta">Charcoal on paper</span>
-          </div>
-        </a>
-
-        <a href="gallery.html" class="featured-item reveal reveal-delay-1">
-          <img src="https://picsum.photos/seed/portrait2/700/900" width="700" height="900" alt="Graphite drawing of hands clasped together">
-          <div class="featured-caption">
-            <span class="featured-caption-title">Held</span>
-            <span class="featured-caption-meta">Graphite on paper</span>
-          </div>
-        </a>
-
-        <a href="gallery.html" class="featured-item reveal reveal-delay-2">
-          <img src="https://picsum.photos/seed/portrait3/700/900" width="700" height="900" alt="Mixed media portrait study in warm tones">
-          <div class="featured-caption">
-            <span class="featured-caption-title">Study in Umber</span>
-            <span class="featured-caption-meta">Mixed media</span>
-          </div>
-        </a>
-
-        <a href="gallery.html" class="featured-item reveal reveal-delay-3">
-          <img src="https://picsum.photos/seed/portrait4/700/900" width="700" height="900" alt="Charcoal figure study on toned paper">
-          <div class="featured-caption">
-            <span class="featured-caption-title">Quiet Moment</span>
-            <span class="featured-caption-meta">Charcoal on toned paper</span>
-          </div>
-        </a>
-
-      </div>
+  <!-- COMPOSITION SPLIT — Horizontal tension -->
+  <section class="composition-split">
+    <div class="composition-split__text">
+      <h2 class="composition-heading">
+        Drawn from<br>observation.<br>
+        <em>Made to last.</em>
+      </h2>
+      <a href="commissions.html" class="text-cta">
+        Commission a portrait
+        <span class="text-cta__line"></span>
+      </a>
+    </div>
+    <div class="composition-split__image">
+      <img src="https://picsum.photos/seed/portrait1/800/1100" width="800" height="1100" alt="Charcoal portrait — The Glance">
     </div>
   </section>
 
-  <!-- About Snippet — the one light room -->
-  <section class="section section-light">
-    <div class="section-inner about-snippet">
-      <div class="about-snippet-image reveal">
-        <img src="https://picsum.photos/seed/artist/400/400" width="400" height="400" alt="Portrait photo of the artist at work in the studio">
-      </div>
-      <div class="about-snippet-text reveal reveal-delay-1">
-        <p class="label">The Artist</p>
+  <!-- PORTRAIT STATEMENT — Single image, centred, generous space -->
+  <section class="portrait-statement">
+    <div class="portrait-statement__inner">
+      <img src="https://picsum.photos/seed/portrait-statement/1200/1600" width="1200" height="1600" alt="Portrait Study — charcoal on Fabriano paper">
+    </div>
+    <div class="portrait-statement__caption">
+      <span class="portrait-title">Portrait Study — R.K.</span>
+      <span class="label" style="margin-bottom:0;">Charcoal on Fabriano &middot; A1 &middot; 2024</span>
+    </div>
+  </section>
+
+  <!-- TEXT INTERRUPTION — The quiet room in the gallery -->
+  <section class="text-interruption">
+    <div class="text-interruption__inner">
+      <div>
+        <p class="label" style="color: var(--silver);">The Artist</p>
         <h2>Charcoal is one of the oldest media in existence.</h2>
-        <p>Every commission begins with a conversation and ends with something worth framing.</p>
-        <a href="about.html" class="btn-primary">More About the Artist</a>
+        <p>Every commission begins with a conversation and ends with something worth framing. The slow, deliberate process of building a portrait by hand creates something a photograph cannot.</p>
+        <a href="about.html" class="btn-primary" style="margin-top: var(--space-lg); color: var(--ink);">More About the Artist</a>
+      </div>
+      <div>
+        <!-- Deliberate emptiness — the space is the design -->
       </div>
     </div>
   </section>
 
-  <!-- Commission CTA — back into the studio -->
-  <section class="section-dark commission-cta text-center">
-    <div class="section-inner">
-      <div class="divider divider--center"></div>
-      <h2 class="reveal">Commission a Portrait</h2>
-      <p class="commission-cta-text reveal reveal-delay-1">A hand-drawn portrait is one of the most personal gifts you can give.</p>
-      <a href="commissions.html" class="btn-primary btn-primary--light reveal reveal-delay-2">Learn More</a>
+  <!-- SECOND PORTRAIT — Different aspect ratio -->
+  <section class="portrait-statement">
+    <div class="portrait-statement__inner">
+      <img src="https://picsum.photos/seed/portrait2-wide/1400/900" width="1400" height="900" alt="Charcoal figure study — two figures on toned paper">
+    </div>
+    <div class="portrait-statement__caption">
+      <span class="portrait-title">Two Figures</span>
+      <span class="label" style="margin-bottom:0;">Charcoal on toned paper &middot; A2 &middot; 2024</span>
     </div>
   </section>
 
-  <!-- Contact Form — warm, approachable close -->
-  <section class="section section-canvas" id="contact">
-    <div class="section-narrow">
-      <div class="text-center">
-        <p class="label reveal">Get in Touch</p>
-        <h2 class="reveal reveal-delay-1">Begin.</h2>
+  <!-- PROCESS — Horizontal, not stacked -->
+  <section class="process-section">
+    <div style="max-width: var(--max-width); margin: 0 auto; margin-bottom: var(--space-2xl);">
+      <p class="label">The Process</p>
+      <h2 class="section-title">How it works.</h2>
+    </div>
+    <div class="process-steps">
+      <div class="process-step">
+        <span class="process-number">01</span>
+        <h3>Begin</h3>
+        <p>Send a message with your idea. Every commission starts with a conversation.</p>
       </div>
-
-      <form name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="contact-form">
-        <input type="hidden" name="form-name" value="contact">
-        <p class="sr-only">
-          <label>Don't fill this out if you're human: <input name="bot-field"></label>
-        </p>
-
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name" required autocomplete="name">
-        </div>
-
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required autocomplete="email">
-        </div>
-
-        <div class="form-group">
-          <label for="commission-type">Commission Type</label>
-          <select id="commission-type" name="commission-type" required>
-            <option value="" disabled selected>Select a type</option>
-            <option value="Portrait">Portrait</option>
-            <option value="Pet Portrait">Pet Portrait</option>
-            <option value="Figure Study">Figure Study</option>
-            <option value="Original Work">Original Work</option>
-            <option value="Something Else">Something Else</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" required placeholder="Tell me about what you have in mind..."></textarea>
-        </div>
-
-        <div class="form-group">
-          <label for="timeline">Timeline</label>
-          <input type="text" id="timeline" name="timeline" placeholder="e.g. Birthday in June" autocomplete="off">
-        </div>
-
-        <button type="submit" class="btn-submit">Send Message</button>
-      </form>
-
-      <div style="text-align: center; margin-top: var(--space-xl);">
-        <p><a href="mailto:hello@lillicoart.com">hello@lillicoart.com</a></p>
-        <p class="label" style="margin-top: var(--space-sm);">Based in Suffolk, UK</p>
+      <div class="process-step">
+        <span class="process-number">02</span>
+        <h3>Agree</h3>
+        <p>We discuss size, medium, composition, and timeline.</p>
       </div>
+      <div class="process-step">
+        <span class="process-number">03</span>
+        <h3>Draw</h3>
+        <p>Progress photos along the way. Two to six weeks per piece.</p>
+      </div>
+      <div class="process-step">
+        <span class="process-number">04</span>
+        <h3>Yours</h3>
+        <p>Carefully packaged and shipped to your door.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT — Minimal, one heading, email, CTA -->
+  <section class="contact-minimal" id="contact">
+    <div class="contact-minimal__inner">
+      <p class="label">Get in Touch</p>
+      <h2>Begin.</h2>
+      <a href="mailto:hello@lillicoart.com" class="contact-email">hello@lillicoart.com</a>
+      <p style="margin: 0 auto;"><a href="commissions.html" class="text-cta" style="justify-content: center;">Commission a portrait <span class="text-cta__line"></span></a></p>
+      <p class="label" style="margin-top: var(--space-xl); margin-bottom: 0;">Based in Suffolk, UK</p>
     </div>
   </section>
 

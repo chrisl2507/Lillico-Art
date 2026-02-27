@@ -8,7 +8,23 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Lenis smooth scroll -->
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+  <style>
+    nav { position: fixed; top: 0; left: 0; right: 0; height: 64px;
+          display: flex; align-items: center; padding: 0 5%; z-index: 1000;
+          background: transparent; }
+    .nav-brand { font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+                 font-size: 1.25rem; letter-spacing: 0.08em; text-transform: uppercase;
+                 color: #fff; text-decoration: none; }
+  </style>
 
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -39,7 +55,7 @@
     <img src="https://picsum.photos/seed/comm-hero/1600/900" width="1600" height="900" alt="Artist drawing a charcoal portrait in the studio" class="hero-image">
     <div class="hero-gradient"></div>
     <div class="hero-content">
-      <p class="hero-label label">Commissions</p>
+      <p class="hero-eyebrow">Commissions</p>
       <h1 class="hero-title">A commissioned portrait is unlike any other gift.</h1>
     </div>
   </section>
