@@ -57,51 +57,51 @@
   <div class="gallery-immersive" id="gallery-immersive">
 
     <div class="gallery-piece active" data-index="0" data-title="Portrait of E.H." data-meta="Charcoal on Fabriano · A1 · 2024" data-category="charcoal">
-      <img src="https://picsum.photos/seed/gal1/700/900" width="700" height="900" alt="Charcoal portrait — Portrait of E.H.">
+      <img src="https://picsum.photos/seed/gal1/700/900" width="700" height="900" alt="Charcoal portrait — Portrait of E.H." fetchpriority="high" decoding="async">
     </div>
 
     <div class="gallery-piece" data-index="1" data-title="Reclining Form" data-meta="Charcoal on paper · A2 · 2023" data-category="charcoal">
-      <img src="https://picsum.photos/seed/gal2/1000/600" width="1000" height="600" alt="Charcoal landscape study — Reclining Form">
+      <img src="https://picsum.photos/seed/gal2/1000/600" width="1000" height="600" alt="Charcoal landscape study — Reclining Form" loading="lazy" decoding="async">
     </div>
 
     <div class="gallery-piece" data-index="2" data-title="Held" data-meta="Graphite on paper · A3 · 2024" data-category="graphite">
-      <img src="https://picsum.photos/seed/gal3/600/600" width="600" height="600" alt="Graphite study — Held">
+      <img src="https://picsum.photos/seed/gal3/600/600" width="600" height="600" alt="Graphite study — Held" loading="lazy" decoding="async">
     </div>
 
     <div class="gallery-piece" data-index="3" data-title="Study in Umber" data-meta="Mixed media · A2 · 2024" data-category="mixed-media">
-      <img src="https://picsum.photos/seed/gal4/700/900" width="700" height="900" alt="Mixed media portrait — Study in Umber">
+      <img src="https://picsum.photos/seed/gal4/700/900" width="700" height="900" alt="Mixed media portrait — Study in Umber" loading="lazy" decoding="async">
     </div>
 
     <div class="gallery-piece" data-index="4" data-title="Quiet Moment" data-meta="Charcoal on toned paper · A3 · 2023" data-category="charcoal">
-      <img src="https://picsum.photos/seed/gal5/600/600" width="600" height="600" alt="Charcoal portrait — Quiet Moment">
+      <img src="https://picsum.photos/seed/gal5/600/600" width="600" height="600" alt="Charcoal portrait — Quiet Moment" loading="lazy" decoding="async">
     </div>
 
     <div class="gallery-piece" data-index="5" data-title="Intertwined" data-meta="Graphite on paper · A3 · 2023" data-category="graphite">
-      <img src="https://picsum.photos/seed/gal6/600/600" width="600" height="600" alt="Graphite drawing — Intertwined">
+      <img src="https://picsum.photos/seed/gal6/600/600" width="600" height="600" alt="Graphite drawing — Intertwined" loading="lazy" decoding="async">
     </div>
 
     <div class="gallery-piece" data-index="6" data-title="Loyal" data-meta="Pet portrait — charcoal · A3 · 2024" data-category="pet">
-      <img src="https://picsum.photos/seed/gal7/700/900" width="700" height="900" alt="Charcoal pet portrait — Loyal">
+      <img src="https://picsum.photos/seed/gal7/700/900" width="700" height="900" alt="Charcoal pet portrait — Loyal" loading="lazy" decoding="async">
     </div>
 
     <div class="gallery-piece" data-index="7" data-title="Emergence" data-meta="Mixed media on toned paper · A2 · 2023" data-category="mixed-media">
-      <img src="https://picsum.photos/seed/gal8/600/600" width="600" height="600" alt="Mixed media figure study — Emergence">
+      <img src="https://picsum.photos/seed/gal8/600/600" width="600" height="600" alt="Mixed media figure study — Emergence" loading="lazy" decoding="async">
     </div>
 
     <div class="gallery-piece" data-index="8" data-title="Two Figures" data-meta="Charcoal on paper · A1 · 2024" data-category="charcoal">
-      <img src="https://picsum.photos/seed/gal9/1000/600" width="1000" height="600" alt="Charcoal study — Two Figures">
+      <img src="https://picsum.photos/seed/gal9/1000/600" width="1000" height="600" alt="Charcoal study — Two Figures" loading="lazy" decoding="async">
     </div>
 
     <div class="gallery-piece" data-index="9" data-title="Watchful" data-meta="Pet portrait — graphite · A3 · 2024" data-category="pet">
-      <img src="https://picsum.photos/seed/gal10/600/600" width="600" height="600" alt="Graphite pet portrait — Watchful">
+      <img src="https://picsum.photos/seed/gal10/600/600" width="600" height="600" alt="Graphite pet portrait — Watchful" loading="lazy" decoding="async">
     </div>
 
     <div class="gallery-piece" data-index="10" data-title="Reflection" data-meta="Charcoal on paper · A2 · 2023" data-category="charcoal">
-      <img src="https://picsum.photos/seed/gal11/700/900" width="700" height="900" alt="Charcoal portrait — Reflection">
+      <img src="https://picsum.photos/seed/gal11/700/900" width="700" height="900" alt="Charcoal portrait — Reflection" loading="lazy" decoding="async">
     </div>
 
     <div class="gallery-piece" data-index="11" data-title="Grace" data-meta="Graphite on paper · A4 · 2024" data-category="graphite">
-      <img src="https://picsum.photos/seed/gal12/600/600" width="600" height="600" alt="Graphite hand study — Grace">
+      <img src="https://picsum.photos/seed/gal12/600/600" width="600" height="600" alt="Graphite hand study — Grace" loading="lazy" decoding="async">
     </div>
 
     <!-- Persistent UI -->
@@ -123,6 +123,22 @@
       <button class="gallery-next" aria-label="Next piece">
         <span class="label" style="margin-bottom:0;">Next</span>
       </button>
+    </div>
+
+    <!-- Thumbnail filmstrip — preview of all pieces -->
+    <div class="gallery-thumbstrip" aria-label="Gallery thumbnail navigation">
+      <button class="gallery-thumb active" data-index="0"><img src="https://picsum.photos/seed/gal1/120/120" width="120" height="120" alt="Portrait of E.H." loading="eager"></button>
+      <button class="gallery-thumb" data-index="1"><img src="https://picsum.photos/seed/gal2/120/120" width="120" height="120" alt="Reclining Form" loading="eager"></button>
+      <button class="gallery-thumb" data-index="2"><img src="https://picsum.photos/seed/gal3/120/120" width="120" height="120" alt="Held" loading="eager"></button>
+      <button class="gallery-thumb" data-index="3"><img src="https://picsum.photos/seed/gal4/120/120" width="120" height="120" alt="Study in Umber" loading="eager"></button>
+      <button class="gallery-thumb" data-index="4"><img src="https://picsum.photos/seed/gal5/120/120" width="120" height="120" alt="Quiet Moment" loading="eager"></button>
+      <button class="gallery-thumb" data-index="5"><img src="https://picsum.photos/seed/gal6/120/120" width="120" height="120" alt="Intertwined" loading="eager"></button>
+      <button class="gallery-thumb" data-index="6"><img src="https://picsum.photos/seed/gal7/120/120" width="120" height="120" alt="Loyal" loading="eager"></button>
+      <button class="gallery-thumb" data-index="7"><img src="https://picsum.photos/seed/gal8/120/120" width="120" height="120" alt="Emergence" loading="eager"></button>
+      <button class="gallery-thumb" data-index="8"><img src="https://picsum.photos/seed/gal9/120/120" width="120" height="120" alt="Two Figures" loading="eager"></button>
+      <button class="gallery-thumb" data-index="9"><img src="https://picsum.photos/seed/gal10/120/120" width="120" height="120" alt="Watchful" loading="eager"></button>
+      <button class="gallery-thumb" data-index="10"><img src="https://picsum.photos/seed/gal11/120/120" width="120" height="120" alt="Reflection" loading="eager"></button>
+      <button class="gallery-thumb" data-index="11"><img src="https://picsum.photos/seed/gal12/120/120" width="120" height="120" alt="Grace" loading="eager"></button>
     </div>
 
     <button class="gallery-mode-toggle" aria-label="Switch to grid view">
@@ -150,7 +166,7 @@
     <!-- Gallery Grid -->
     <div class="gallery-grid">
       <div class="gallery-item" data-orientation="portrait" data-category="charcoal">
-        <img src="https://picsum.photos/seed/gal1/700/900" width="700" height="900" alt="Charcoal portrait — The Glance">
+        <img src="https://picsum.photos/seed/gal1/700/900" width="700" height="900" alt="Charcoal portrait — The Glance" loading="lazy" decoding="async">
         <div class="gallery-item-overlay">
           <span class="gallery-item-title">The Glance</span>
           <span class="gallery-item-category">Charcoal on paper</span>
@@ -158,7 +174,7 @@
       </div>
 
       <div class="gallery-item" data-orientation="landscape" data-category="charcoal">
-        <img src="https://picsum.photos/seed/gal2/1000/600" width="1000" height="600" alt="Charcoal landscape study — Reclining Form">
+        <img src="https://picsum.photos/seed/gal2/1000/600" width="1000" height="600" alt="Charcoal landscape study — Reclining Form" loading="lazy" decoding="async">
         <div class="gallery-item-overlay">
           <span class="gallery-item-title">Reclining Form</span>
           <span class="gallery-item-category">Charcoal on paper</span>
@@ -166,7 +182,7 @@
       </div>
 
       <div class="gallery-item" data-category="graphite">
-        <img src="https://picsum.photos/seed/gal3/600/600" width="600" height="600" alt="Graphite study — Held">
+        <img src="https://picsum.photos/seed/gal3/600/600" width="600" height="600" alt="Graphite study — Held" loading="lazy" decoding="async">
         <div class="gallery-item-overlay">
           <span class="gallery-item-title">Held</span>
           <span class="gallery-item-category">Graphite on paper</span>
@@ -174,7 +190,7 @@
       </div>
 
       <div class="gallery-item" data-orientation="portrait" data-category="mixed-media">
-        <img src="https://picsum.photos/seed/gal4/700/900" width="700" height="900" alt="Mixed media portrait — Study in Umber">
+        <img src="https://picsum.photos/seed/gal4/700/900" width="700" height="900" alt="Mixed media portrait — Study in Umber" loading="lazy" decoding="async">
         <div class="gallery-item-overlay">
           <span class="gallery-item-title">Study in Umber</span>
           <span class="gallery-item-category">Mixed media</span>
@@ -182,7 +198,7 @@
       </div>
 
       <div class="gallery-item" data-category="charcoal">
-        <img src="https://picsum.photos/seed/gal5/600/600" width="600" height="600" alt="Charcoal portrait — Quiet Moment">
+        <img src="https://picsum.photos/seed/gal5/600/600" width="600" height="600" alt="Charcoal portrait — Quiet Moment" loading="lazy" decoding="async">
         <div class="gallery-item-overlay">
           <span class="gallery-item-title">Quiet Moment</span>
           <span class="gallery-item-category">Charcoal on toned paper</span>
@@ -190,7 +206,7 @@
       </div>
 
       <div class="gallery-item" data-category="graphite">
-        <img src="https://picsum.photos/seed/gal6/600/600" width="600" height="600" alt="Graphite drawing — Intertwined">
+        <img src="https://picsum.photos/seed/gal6/600/600" width="600" height="600" alt="Graphite drawing — Intertwined" loading="lazy" decoding="async">
         <div class="gallery-item-overlay">
           <span class="gallery-item-title">Intertwined</span>
           <span class="gallery-item-category">Graphite on paper</span>
@@ -198,7 +214,7 @@
       </div>
 
       <div class="gallery-item" data-orientation="portrait" data-category="pet">
-        <img src="https://picsum.photos/seed/gal7/700/900" width="700" height="900" alt="Charcoal pet portrait — Loyal">
+        <img src="https://picsum.photos/seed/gal7/700/900" width="700" height="900" alt="Charcoal pet portrait — Loyal" loading="lazy" decoding="async">
         <div class="gallery-item-overlay">
           <span class="gallery-item-title">Loyal</span>
           <span class="gallery-item-category">Pet portrait — charcoal</span>
@@ -206,7 +222,7 @@
       </div>
 
       <div class="gallery-item" data-category="mixed-media">
-        <img src="https://picsum.photos/seed/gal8/600/600" width="600" height="600" alt="Mixed media figure study — Emergence">
+        <img src="https://picsum.photos/seed/gal8/600/600" width="600" height="600" alt="Mixed media figure study — Emergence" loading="lazy" decoding="async">
         <div class="gallery-item-overlay">
           <span class="gallery-item-title">Emergence</span>
           <span class="gallery-item-category">Mixed media on toned paper</span>
@@ -214,7 +230,7 @@
       </div>
 
       <div class="gallery-item" data-orientation="landscape" data-category="charcoal">
-        <img src="https://picsum.photos/seed/gal9/1000/600" width="1000" height="600" alt="Charcoal study — Two Figures">
+        <img src="https://picsum.photos/seed/gal9/1000/600" width="1000" height="600" alt="Charcoal study — Two Figures" loading="lazy" decoding="async">
         <div class="gallery-item-overlay">
           <span class="gallery-item-title">Two Figures</span>
           <span class="gallery-item-category">Charcoal on paper</span>
@@ -222,7 +238,7 @@
       </div>
 
       <div class="gallery-item" data-category="pet">
-        <img src="https://picsum.photos/seed/gal10/600/600" width="600" height="600" alt="Graphite pet portrait — Watchful">
+        <img src="https://picsum.photos/seed/gal10/600/600" width="600" height="600" alt="Graphite pet portrait — Watchful" loading="lazy" decoding="async">
         <div class="gallery-item-overlay">
           <span class="gallery-item-title">Watchful</span>
           <span class="gallery-item-category">Pet portrait — graphite</span>
@@ -230,7 +246,7 @@
       </div>
 
       <div class="gallery-item" data-orientation="portrait" data-category="charcoal">
-        <img src="https://picsum.photos/seed/gal11/700/900" width="700" height="900" alt="Charcoal portrait — Reflection">
+        <img src="https://picsum.photos/seed/gal11/700/900" width="700" height="900" alt="Charcoal portrait — Reflection" loading="lazy" decoding="async">
         <div class="gallery-item-overlay">
           <span class="gallery-item-title">Reflection</span>
           <span class="gallery-item-category">Charcoal on paper</span>
@@ -238,7 +254,7 @@
       </div>
 
       <div class="gallery-item" data-category="graphite">
-        <img src="https://picsum.photos/seed/gal12/600/600" width="600" height="600" alt="Graphite hand study — Grace">
+        <img src="https://picsum.photos/seed/gal12/600/600" width="600" height="600" alt="Graphite hand study — Grace" loading="lazy" decoding="async">
         <div class="gallery-item-overlay">
           <span class="gallery-item-title">Grace</span>
           <span class="gallery-item-category">Graphite on paper</span>
