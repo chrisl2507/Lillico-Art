@@ -25,28 +25,15 @@
       lenis = new Lenis({
         duration: 1.4,
         easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
-        smooth: true
+        smoothWheel: true
       });
 
       // Connect Lenis to GSAP ticker
       gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
       gsap.ticker.lagSmoothing(0);
 
-      // ScrollTrigger proxy for Lenis
+      // Sync Lenis scroll position with ScrollTrigger
       if (typeof ScrollTrigger !== 'undefined') {
-        ScrollTrigger.scrollerProxy(document.body, {
-          scrollTop: function (value) {
-            if (arguments.length) {
-              lenis.scrollTo(value, { immediate: true });
-              return;
-            }
-            return lenis.scroll;
-          },
-          getBoundingClientRect: function () {
-            return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
-          }
-        });
-
         lenis.on('scroll', ScrollTrigger.update);
       }
     } catch (e) {
@@ -477,6 +464,15 @@
       if (e.key === 'ArrowLeft') prev();
     });
 
+    // Scroll wheel navigation in immersive mode
+    var wheelDebounce = null;
+    immersive.addEventListener('wheel', function (e) {
+      e.preventDefault();
+      if (wheelDebounce) return;
+      wheelDebounce = setTimeout(function () { wheelDebounce = null; }, 400);
+      if (e.deltaY > 0) { next(); } else { prev(); }
+    }, { passive: false });
+
     // Touch swipe
     var touchStartX = 0;
     immersive.addEventListener('touchstart', function (e) {
@@ -526,6 +522,9 @@
     // Initialise
     updateInfo(0);
     updateThumbs(0);
+
+    // Stop Lenis on gallery immersive mode — wheel is handled above
+    if (lenis) lenis.stop();
 
     // Fade in the gallery page
     document.body.style.animation = 'none';
