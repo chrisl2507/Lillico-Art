@@ -55,8 +55,9 @@
      ============================================ */
   var currentPath = window.location.pathname.split('/').pop() || 'index.html';
   document.querySelectorAll('.nav-link').forEach(function (link) {
-    var linkPath = link.getAttribute('href').split('#')[0];
-    if (linkPath === currentPath) {
+    var href = link.getAttribute('href');
+    if (href.indexOf('#') !== -1) return;
+    if (href === currentPath) {
       link.classList.add('active');
     }
   });
@@ -166,15 +167,14 @@
     var navBrand = document.querySelector('.nav-brand');
     var heroEyebrow = document.querySelector('.hero-eyebrow');
     var heroTitle = document.querySelector('.hero-title');
-    var heroCta = document.querySelector('.hero-cta');
     var navMenu = document.querySelector('.nav-menu');
 
     // Cancel CSS failsafe animation — GSAP is in control now
     document.body.style.animation = 'none';
     // Set initial hidden states
     gsap.set(document.body, { opacity: 1 });
-    gsap.set([heroImg, heroGradient, navBrand, heroEyebrow, heroTitle, heroCta, navMenu], { opacity: 0 });
-    gsap.set([navBrand, heroEyebrow, heroTitle, heroCta], { y: 14 });
+    gsap.set([heroImg, heroGradient, navBrand, heroEyebrow, heroTitle, navMenu], { opacity: 0 });
+    gsap.set([navBrand, heroEyebrow, heroTitle], { y: 14 });
 
     var runOpeningSequence = function () {
       var tl = gsap.timeline();
@@ -184,8 +184,7 @@
         .to(navBrand, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 1.0)
         .to(heroEyebrow, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 1.4)
         .to(heroTitle, { opacity: 1, y: 0, duration: 1.0, ease: 'power3.out' }, 1.7)
-        .to(heroCta, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 2.2)
-        .to(navMenu, { opacity: 1, duration: 0.6, ease: 'power3.out' }, 2.3);
+        .to(navMenu, { opacity: 1, duration: 0.6, ease: 'power3.out' }, 2.0);
     };
 
     // Preload hero image, then run sequence
@@ -256,17 +255,6 @@
         }
       });
 
-      gsap.from('.text-cta', {
-        opacity: 0,
-        y: 20,
-        ease: 'power3.out',
-        duration: 0.8,
-        scrollTrigger: {
-          trigger: '.composition-split',
-          start: 'top 60%',
-          toggleActions: 'play none none none'
-        }
-      });
     }
 
     // --- Portrait statement — clip-path wipe reveal ---
