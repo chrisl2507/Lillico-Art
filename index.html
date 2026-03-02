@@ -63,6 +63,15 @@
     ]
   }
   </script>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7GD6ZW9TJY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7GD6ZW9TJY');
+</script>
 </head>
 <body class="home">
 
@@ -147,7 +156,7 @@
       <p class="label">Get in Touch</p>
       <h2>Begin.</h2>
       <p style="max-width: 45ch; margin: 0 auto var(--space-xl); color: var(--silver);">Every portrait starts with a conversation.</p>
-      <form name="contact" method="POST" data-netlify="true" class="contact-form">
+      <form name="contact" method="POST" data-netlify="true" action="/thank-you.html" class="contact-form">
         <input type="hidden" name="form-name" value="contact">
         <div class="form-group">
           <label for="name" class="label">Name</label>
