@@ -378,6 +378,12 @@ body.page-interior nav {
   color: var(--umber);
 }
 
+.nav-logo {
+  height: 62px;
+  width: auto;
+  display: block;
+}
+
 /* Hamburger toggle */
 .nav-toggle {
   display: flex;
@@ -1474,6 +1480,162 @@ body.nav-open { overflow: hidden; }
   gap: 2px;
 }
 
+
+/* ============================================
+   GLASS MORPHISM — Homepage Content Panels
+   Frosted glass cards against dark sections.
+   ============================================ */
+
+/* Ambient umber glow behind glass cards */
+.text-interruption::after,
+.contact-minimal::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+  height: 85%;
+  background: radial-gradient(ellipse at center, rgba(139, 111, 71, 0.22) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Artist bio — glass card */
+.text-interruption__inner {
+  position: relative;
+  z-index: 1;
+  padding: clamp(2.5rem, 5vw, 4rem) clamp(2rem, 6vw, 4.5rem);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(24px) saturate(1.6);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  border-radius: 2px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -1px 0 rgba(139, 111, 71, 0.12),
+    0 32px 100px rgba(0, 0, 0, 0.5),
+    0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Gradient border — directional light catching the glass edge */
+.text-interruption__inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(139, 111, 71, 0.5) 22%,
+    rgba(139, 111, 71, 0.1) 58%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Desktop — paragraphs left, title right */
+@media (min-width: 900px) {
+  .text-interruption__inner {
+    max-width: min(88%, 1000px);
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    grid-template-areas:
+      "p1 lbl"
+      "p2 ttl";
+    column-gap: 5rem;
+    row-gap: var(--space-lg);
+    text-align: left;
+  }
+
+  .text-interruption__inner > .label {
+    grid-area: lbl;
+    align-self: end;
+    margin-bottom: var(--space-xs);
+  }
+
+  .text-interruption__inner > h2 {
+    grid-area: ttl;
+    align-self: start;
+    margin-bottom: 0;
+    text-align: left;
+  }
+
+  .text-interruption__inner > p:nth-child(3) {
+    grid-area: p1;
+    max-width: none;
+    margin: 0;
+  }
+
+  .text-interruption__inner > p:nth-child(4) {
+    grid-area: p2;
+    max-width: none;
+    margin: 0;
+  }
+
+  .text-interruption p {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+/* Contact form — glass card */
+.contact-form {
+  position: relative;
+  padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 4vw, 3rem);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(24px) saturate(1.6);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  border-radius: 2px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -1px 0 rgba(139, 111, 71, 0.12),
+    0 32px 100px rgba(0, 0, 0, 0.5),
+    0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Gradient border on contact form */
+.contact-form::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(139, 111, 71, 0.5) 22%,
+    rgba(139, 111, 71, 0.1) 58%,
+    rgba(255, 255, 255, 0.04) 100%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Portrait captions — glass pill */
+.portrait-statement__caption {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(139, 111, 71, 0.2);
+  border-top-color: rgba(255, 255, 255, 0.1);
+  padding: 0.85rem 1.25rem;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Composition text panel — warm gradient shimmer */
+.composition-split__text {
+  background: linear-gradient(155deg, rgba(139, 111, 71, 0.12) 0%, transparent 55%);
+}
+
+
 @media (max-width: 768px) {
   .commission-gallery {
     grid-template-columns: 1fr;
@@ -1861,6 +2023,7 @@ body.nav-open { overflow: hidden; }
     transform: none;
     text-align: center;
     max-width: none;
+    white-space: normal;
   }
 
   .gallery-immersive__nav {
@@ -1908,5 +2071,13 @@ body.nav-open { overflow: hidden; }
   .form-group select,
   .form-group textarea {
     min-height: 44px;
+  }
+
+  /* Glass — remove backdrop-filter on mobile for performance */
+  .text-interruption__inner,
+  .contact-form,
+  .portrait-statement__caption {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 }

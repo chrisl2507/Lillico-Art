@@ -261,11 +261,11 @@
     gsap.utils.toArray('.portrait-statement__inner').forEach(function (el) {
       gsap.from(el, {
         clipPath: 'inset(100% 0% 0% 0%)',
-        ease: 'power4.inOut',
-        duration: 1.4,
+        ease: 'power3.out',
+        duration: 1.0,
         scrollTrigger: {
           trigger: el,
-          start: 'top 65%',
+          start: 'top 80%',
           toggleActions: 'play none none none'
         }
       });
