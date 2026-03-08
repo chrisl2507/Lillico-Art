@@ -734,6 +734,48 @@ body.nav-open { overflow: hidden; }
 
 
 /* ============================================
+   PORTRAIT PAIR — Two pieces side by side (desktop)
+   ============================================ */
+
+@media (min-width: 769px) {
+  .portrait-pair {
+    display: flex;
+    background: var(--ink);
+  }
+
+  .portrait-pair .portrait-statement {
+    flex: 1;
+    padding: 10vh 5vw;
+  }
+
+  /* Suppress horizontal divider — replace with vertical rule */
+  .portrait-pair .portrait-statement + .portrait-statement::before {
+    display: none;
+  }
+
+  .portrait-pair .portrait-statement + .portrait-statement {
+    border-left: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .portrait-pair .portrait-statement__inner,
+  .portrait-pair .portrait-statement__caption {
+    width: 100%;
+  }
+
+  /* Force both images to the same square size — artworks are 60×60cm */
+  .portrait-pair .portrait-statement__inner {
+    aspect-ratio: 1;
+  }
+
+  .portrait-pair .portrait-statement__inner img {
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+
+/* ============================================
    TEXT INTERRUPTION — The quiet room
    ============================================ */
 

@@ -289,7 +289,7 @@
 
     // --- Text interruption reveal ---
     if (document.querySelector('.text-interruption')) {
-      gsap.from('.text-interruption__inner > div:first-child', {
+      gsap.from('.text-interruption__inner', {
         opacity: 0,
         y: 30,
         ease: 'power3.out',
