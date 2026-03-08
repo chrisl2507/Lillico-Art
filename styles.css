@@ -1221,6 +1221,47 @@ body.nav-open { overflow: hidden; }
   color: var(--white);
 }
 
+/* Fullscreen button — top left */
+.gallery-fullscreen-btn {
+  position: absolute;
+  top: 5rem;
+  left: 5%;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.45);
+  padding: 0.6em 0.8em;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  z-index: 10;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gallery-fullscreen-btn:hover {
+  border-color: rgba(255,255,255,0.4);
+  color: var(--white);
+}
+
+/* Cursor hint — click to fullscreen */
+.gallery-piece img {
+  cursor: zoom-in;
+}
+
+/* Fullscreen state */
+.gallery-immersive:fullscreen,
+.gallery-immersive:-webkit-full-screen {
+  background: #000;
+}
+
+.gallery-immersive:fullscreen .gallery-piece img,
+.gallery-immersive:-webkit-full-screen .gallery-piece img {
+  cursor: zoom-out;
+  max-width: 96vw;
+  max-height: 96vh;
+}
+
 
 /* ============================================
    GALLERY — Thumbnail filmstrip
@@ -2050,6 +2091,9 @@ body.nav-open { overflow: hidden; }
     max-width: 90vw;
     max-height: 75svh;
   }
+
+  /* Fullscreen is redundant on mobile (viewer already fills viewport) */
+  .gallery-fullscreen-btn { display: none; }
 
   .gallery-immersive__counter {
     top: 5rem;

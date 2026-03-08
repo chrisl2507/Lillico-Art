@@ -627,6 +627,59 @@
 
 
   /* ============================================
+     GALLERY — Fullscreen
+     ============================================ */
+  if (immersive) {
+    var fullscreenBtn = immersive.querySelector('.gallery-fullscreen-btn');
+    var iconExpand   = fullscreenBtn ? fullscreenBtn.querySelector('.icon-expand')   : null;
+    var iconCompress = fullscreenBtn ? fullscreenBtn.querySelector('.icon-compress') : null;
+
+    function enterFullscreen() {
+      var req = immersive.requestFullscreen || immersive.webkitRequestFullscreen;
+      if (req) req.call(immersive).catch(function () {});
+    }
+
+    function exitFullscreen() {
+      var exit = document.exitFullscreen || document.webkitExitFullscreen;
+      if (exit) exit.call(document);
+    }
+
+    function toggleFullscreen() {
+      var fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+      fsEl ? exitFullscreen() : enterFullscreen();
+    }
+
+    function onFullscreenChange() {
+      var fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+      if (!fullscreenBtn) return;
+      fullscreenBtn.setAttribute('aria-label', fsEl ? 'Exit fullscreen' : 'Enter fullscreen');
+      if (iconExpand)   iconExpand.style.display   = fsEl ? 'none'  : '';
+      if (iconCompress) iconCompress.style.display  = fsEl ? ''      : 'none';
+    }
+
+    var fullscreenSupported = !!(immersive.requestFullscreen || immersive.webkitRequestFullscreen);
+
+    if (!fullscreenSupported && fullscreenBtn) {
+      fullscreenBtn.style.display = 'none';
+    }
+
+    if (fullscreenBtn && fullscreenSupported) {
+      fullscreenBtn.addEventListener('click', toggleFullscreen);
+    }
+
+    // Click image to toggle fullscreen
+    if (fullscreenSupported) {
+      immersive.querySelectorAll('.gallery-piece img').forEach(function (img) {
+        img.addEventListener('click', toggleFullscreen);
+      });
+    }
+
+    document.addEventListener('fullscreenchange', onFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', onFullscreenChange);
+  }
+
+
+  /* ============================================
      BFCACHE — Restore visibility on back/forward
      ============================================ */
   window.addEventListener('pageshow', function (e) {
