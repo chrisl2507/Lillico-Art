@@ -521,6 +521,17 @@ body.nav-open { overflow: hidden; }
   background: var(--ink);
 }
 
+/* Homepage hero — full viewport statement */
+.hero--home {
+  height: 100svh;
+}
+
+@media (max-width: 768px) {
+  .hero--home {
+    height: 75svh;
+  }
+}
+
 .hero-image {
   position: absolute;
   inset: 0;
@@ -530,16 +541,23 @@ body.nav-open { overflow: hidden; }
   object-position: center center;
 }
 
+/* Vignette — draws the eye to the centre of the artwork */
+.hero-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(13,13,13,0.4) 100%);
+  z-index: 1;
+  pointer-events: none;
+}
+
 /* Gradient overlay — real element for GSAP control */
 .hero-gradient {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(13, 13, 13, 0.88) 0%,
-    transparent 65%
-  );
-  z-index: 1;
+  background:
+    linear-gradient(to bottom, rgba(13,13,13,0.5) 0%, transparent 25%),
+    linear-gradient(to top, rgba(13,13,13,0.92) 0%, rgba(13,13,13,0.4) 30%, transparent 65%);
+  z-index: 2;
 }
 
 .hero-content {
@@ -547,8 +565,8 @@ body.nav-open { overflow: hidden; }
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 0 5% 5vh;
-  z-index: 2;
+  padding: 0 5% 6vh;
+  z-index: 3;
 }
 
 .hero-eyebrow {
@@ -561,6 +579,29 @@ body.nav-open { overflow: hidden; }
   margin-bottom: 1rem;
 }
 
+/* Credential line — italic, understated authority */
+.hero-credentials {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(0.75rem, 1vw, 0.95rem);
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(255,255,255,0.55);
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.03em;
+}
+
+.hero-credentials em {
+  font-style: italic;
+}
+
+/* Umber rule between credentials and title */
+.hero-rule {
+  width: 40px;
+  height: 1px;
+  background: var(--umber);
+  margin-bottom: 1.5rem;
+}
+
 .hero-title {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(3rem, 8vw, 6.5rem);
@@ -570,6 +611,17 @@ body.nav-open { overflow: hidden; }
   line-height: 1.0;
   margin-bottom: 1.5rem;
   max-width: 700px;
+}
+
+/* Larger title on full-viewport hero */
+.hero--home .hero-title {
+  font-size: clamp(4rem, 12vw, 9rem);
+}
+
+@media (max-width: 768px) {
+  .hero--home .hero-title {
+    font-size: clamp(3rem, 12vw, 4.5rem);
+  }
 }
 
 /* Hero CTA — text with extending line */
@@ -679,12 +731,286 @@ body.nav-open { overflow: hidden; }
 
 
 /* ============================================
+   FEATURED CAROUSEL — Homepage artwork viewer
+   ============================================ */
+
+.featured-carousel {
+  background: var(--ink);
+  padding: 5vh 0 6vh;
+  position: relative;
+  overflow: hidden; /* clips peek slides at section edges */
+}
+
+.featured-carousel__header {
+  text-align: center;
+  padding: 0 5% 2.5vh;
+}
+
+/* Stage — portrait aspect ratio matches artwork so contain = no letterboxing.
+   Narrower than section so peek slides are visible in the flanking space. */
+.featured-carousel__stage {
+  position: relative;
+  aspect-ratio: 5 / 7;   /* matches ~999×1400 portrait ratio of the artwork */
+  max-height: 80vh;       /* prevents the stage being taller than the screen */
+  width: min(76vw, 960px);
+  margin: 0 auto;
+  /* no overflow:hidden — peek slides extend beyond stage edges, section clips them */
+}
+
+.carousel-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0; /* CSS fallback; GSAP overrides at runtime */
+  pointer-events: none;
+}
+
+.carousel-slide.is-active {
+  opacity: 1; /* CSS fallback */
+  pointer-events: auto;
+}
+
+/* Contain shows the full artwork — stage ratio matches images so no dead space */
+.carousel-slide img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+  display: block;
+  filter: grayscale(100%) contrast(1.08);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+/* Info bar — centred, width approximates the height-constrained stage width */
+.carousel-info {
+  max-width: 560px;
+  width: 90%;
+  margin: 0 auto;
+  padding: 0.75rem 0 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .featured-carousel__stage {
+    width: 100%;
+    overflow: hidden; /* no peek on narrow screens */
+  }
+
+  .carousel-info {
+    max-width: 100%;
+    width: 90%;
+    padding: 0.75rem 0 0;
+  }
+}
+
+.carousel-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.carousel-dots {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+.carousel-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: background var(--transition-base), transform var(--transition-base);
+}
+
+.carousel-dot.is-active {
+  background: var(--umber);
+  transform: scale(1.2);
+}
+
+.carousel-dot:hover {
+  background: rgba(255,255,255,0.45);
+}
+
+.featured-work__footer {
+  text-align: center;
+  padding: 3.5vh 5% 0;
+}
+
+@media (max-width: 768px) {
+  .featured-carousel__stage {
+    height: 52vw;
+    max-height: none;
+  }
+
+  .carousel-info {
+    padding: 0.75rem 5% 0;
+  }
+}
+
+
+/* ============================================
+   SECTION DIVIDERS — Umber line, centred
+   ============================================ */
+
+.home .section-divider {
+  display: block;
+  width: 40px;
+  height: 1px;
+  background: var(--umber);
+  margin: 0 auto;
+  opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+  .home .section-divider {
+    width: 30px;
+  }
+}
+
+
+/* ============================================
+   CREDENTIALS BAR — Quiet authority
+   ============================================ */
+
+.credentials-bar {
+  background: var(--ink);
+  padding: 3rem 5%;
+  position: relative;
+  text-align: center;
+}
+
+.credentials-bar::before,
+.credentials-bar::after {
+  content: '';
+  position: absolute;
+  left: 15%;
+  right: 15%;
+  height: 1px;
+  background: rgba(139, 111, 71, 0.2);
+}
+
+.credentials-bar::before { top: 0; }
+.credentials-bar::after { bottom: 0; }
+
+.credentials-bar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0;
+}
+
+.credentials-bar__item {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: var(--text-md);
+  font-style: italic;
+  font-weight: 300;
+  color: rgba(255,255,255,0.8);
+  letter-spacing: 0.01em;
+}
+
+.credentials-bar__item em {
+  font-style: italic;
+}
+
+.credentials-divider {
+  display: inline-block;
+  width: 1px;
+  height: 1em;
+  background: var(--umber);
+  margin: 0 2.5rem;
+  vertical-align: middle;
+  opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+  .credentials-bar {
+    padding: 2rem 5%;
+  }
+
+  .credentials-bar__inner {
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .credentials-divider {
+    display: none;
+  }
+
+  .credentials-bar::before,
+  .credentials-bar::after {
+    left: 25%;
+    right: 25%;
+  }
+}
+
+
+/* ============================================
+   COMMISSION CTA — Warm conversion section
+   ============================================ */
+
+.commission-cta-section {
+  background: #141210;
+  padding: 7vh 5%;
+  position: relative;
+  text-align: center;
+}
+
+.commission-cta-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, var(--umber));
+}
+
+.commission-cta-section__inner {
+  max-width: 580px;
+  margin: 0 auto;
+}
+
+.commission-cta-section h2 {
+  margin-bottom: var(--space-lg);
+}
+
+.commission-cta-section p {
+  color: rgba(255,255,255,0.6);
+  font-weight: 300;
+  line-height: 1.9;
+  max-width: 50ch;
+  margin: 0 auto var(--space-xl);
+}
+
+@media (max-width: 768px) {
+  .commission-cta-section {
+    padding: 5vh 5%;
+  }
+
+  .commission-cta-section::before {
+    height: 40px;
+  }
+}
+
+
+/* ============================================
    PORTRAIT STATEMENT — Full-width single piece
    ============================================ */
 
 .portrait-statement {
   background: var(--ink);
-  padding: 16vh 0;
+  padding: 8vh 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -719,9 +1045,31 @@ body.nav-open { overflow: hidden; }
   margin-top: 1.5rem;
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   border-top: 1px solid rgba(255,255,255,0.08);
   padding-top: 1rem;
+}
+
+/* Title + medium stacked on the left */
+.portrait-statement__caption .portrait-title,
+.portrait-statement__caption .label:not(.portrait-exhibited) {
+  display: block;
+}
+
+.portrait-statement__caption .portrait-title + .label:not(.portrait-exhibited) {
+  margin-top: 0.2rem;
+}
+
+/* Wrap title + medium together so exhibition sits flush right */
+.portrait-statement__caption {
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+}
+
+.portrait-exhibited {
+  margin-left: auto;
+  color: rgba(255,255,255,0.38);
+  font-style: italic;
 }
 
 .portrait-title {
@@ -745,7 +1093,7 @@ body.nav-open { overflow: hidden; }
 
   .portrait-pair .portrait-statement {
     flex: 1;
-    padding: 10vh 5vw;
+    padding: 6vh 4vw;
   }
 
   /* Suppress horizontal divider — replace with vertical rule */
@@ -762,14 +1110,15 @@ body.nav-open { overflow: hidden; }
     width: 100%;
   }
 
-  /* Force both images to the same square size — artworks are 60×60cm */
+  /* Natural proportions — remove forced square crop */
   .portrait-pair .portrait-statement__inner {
-    aspect-ratio: 1;
+    aspect-ratio: unset;
   }
 
   .portrait-pair .portrait-statement__inner img {
-    height: 100%;
-    object-fit: cover;
+    height: auto;
+    max-height: 65vh;
+    object-fit: contain;
     object-position: center;
   }
 }
@@ -781,7 +1130,7 @@ body.nav-open { overflow: hidden; }
 
 .text-interruption {
   background: #141210;
-  padding: 14vh 5%;
+  padding: 8vh 5%;
   position: relative;
 }
 
@@ -815,10 +1164,11 @@ body.nav-open { overflow: hidden; }
 .text-interruption p {
   color: rgba(255,255,255,0.65);
   font-weight: 300;
-  line-height: 1.95;
+  line-height: 2.0;
   max-width: 60ch;
   margin-left: auto;
   margin-right: auto;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
 }
 
 .text-interruption p + p {
@@ -882,7 +1232,7 @@ body.nav-open { overflow: hidden; }
 
 .contact-minimal {
   background: #141210;
-  padding: 14vh 5%;
+  padding: 8vh 5%;
   border-top: none;
   position: relative;
 }
@@ -1569,7 +1919,7 @@ body.nav-open { overflow: hidden; }
    Frosted glass cards against dark sections.
    ============================================ */
 
-/* Ambient umber glow behind glass cards */
+/* Ambient umber glow behind glass cards — tighter on homepage */
 .text-interruption::after,
 .contact-minimal::after {
   content: '';
@@ -1577,8 +1927,8 @@ body.nav-open { overflow: hidden; }
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 85%;
-  height: 85%;
+  width: 60%;
+  height: 60%;
   background: radial-gradient(ellipse at center, rgba(139, 111, 71, 0.22) 0%, transparent 60%);
   pointer-events: none;
   z-index: 0;
@@ -1588,7 +1938,7 @@ body.nav-open { overflow: hidden; }
 .text-interruption__inner {
   position: relative;
   z-index: 1;
-  padding: clamp(2.5rem, 5vw, 4rem) clamp(2rem, 6vw, 4.5rem);
+  padding: clamp(3rem, 6vw, 5rem) clamp(2.5rem, 7vw, 5.5rem);
   background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(24px) saturate(1.6);
   -webkit-backdrop-filter: blur(24px) saturate(1.6);
@@ -2166,4 +2516,104 @@ body.nav-open { overflow: hidden; }
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
+}
+
+
+/* ============================================
+   COOKIE CONSENT BANNER
+   ============================================ */
+
+#la-consent {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2000;
+  background: rgba(13, 13, 13, 0.97);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid rgba(139, 111, 71, 0.3);
+  padding: 1.5rem 5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  opacity: 0;
+  transform: translateY(100%);
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+#la-consent.la-consent--visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+#la-consent .label {
+  margin-bottom: 0.25rem;
+}
+
+#la-consent p:last-of-type {
+  margin-bottom: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--text-sm);
+  max-width: 55ch;
+}
+
+.la-consent__actions {
+  display: flex;
+  gap: var(--space-sm);
+  flex-shrink: 0;
+}
+
+.la-consent__actions button {
+  min-height: 44px;
+  min-width: 90px;
+  padding: 0.6em 1.4em;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.625rem;
+  font-weight: 500;
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.la-consent__actions button:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+  color: var(--white);
+}
+
+@media (max-width: 768px) {
+  #la-consent {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .la-consent__actions {
+    width: 100%;
+  }
+
+  .la-consent__actions button {
+    flex: 1;
+    text-align: center;
+  }
+}
+
+
+/* ============================================
+   HOMEPAGE TYPOGRAPHY REFINEMENTS
+   ============================================ */
+
+.home h2 {
+  font-size: clamp(2.8rem, 6vw, 5rem);
+}
+
+.home {
+  line-height: 1.8;
 }

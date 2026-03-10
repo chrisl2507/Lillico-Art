@@ -166,6 +166,8 @@
     var heroGradient = document.querySelector('.hero-gradient');
     var navBrand = document.querySelector('.nav-brand');
     var heroEyebrow = document.querySelector('.hero-eyebrow');
+    var heroCredentials = document.querySelector('.hero-credentials');
+    var heroRule = document.querySelector('.hero-rule');
     var heroTitle = document.querySelector('.hero-title');
     var navMenu = document.querySelector('.nav-menu');
 
@@ -175,6 +177,8 @@
     gsap.set(document.body, { opacity: 1 });
     gsap.set([heroImg, heroGradient, navBrand, heroEyebrow, heroTitle, navMenu], { opacity: 0 });
     gsap.set([navBrand, heroEyebrow, heroTitle], { y: 14 });
+    if (heroCredentials) gsap.set(heroCredentials, { opacity: 0, y: 14 });
+    if (heroRule) gsap.set(heroRule, { opacity: 0 });
 
     var runOpeningSequence = function () {
       var tl = gsap.timeline();
@@ -182,9 +186,17 @@
       tl.to(heroImg, { opacity: 1, duration: 1.4, ease: 'power2.out' }, 0)
         .to(heroGradient, { opacity: 1, duration: 1, ease: 'power2.out' }, 0.6)
         .to(navBrand, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, 1.0)
-        .to(heroEyebrow, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 1.4)
-        .to(heroTitle, { opacity: 1, y: 0, duration: 1.0, ease: 'power3.out' }, 1.7)
-        .to(navMenu, { opacity: 1, duration: 0.6, ease: 'power3.out' }, 2.0);
+        .to(heroEyebrow, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 1.4);
+
+      if (heroCredentials) {
+        tl.to(heroCredentials, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' }, 1.8);
+      }
+      if (heroRule) {
+        tl.to(heroRule, { opacity: 1, duration: 0.4, ease: 'power2.out' }, 2.1);
+      }
+
+      tl.to(heroTitle, { opacity: 1, y: 0, duration: 1.0, ease: 'power3.out' }, 2.4)
+        .to(navMenu, { opacity: 1, duration: 0.6, ease: 'power3.out' }, 2.8);
     };
 
     // Preload hero image, then run sequence
@@ -230,31 +242,18 @@
       });
     }
 
-    // --- Composition split animations ---
-    if (document.querySelector('.composition-split')) {
-      gsap.from('.composition-split__image img', {
-        scale: 1.08,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.composition-split',
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: isMobile ? false : 1.5
-        }
-      });
-
-      gsap.from('.composition-heading', {
-        x: -40,
+    // --- Featured carousel — fade in on scroll enter ---
+    if (document.querySelector('.featured-carousel__stage')) {
+      gsap.from('.featured-carousel__stage', {
         opacity: 0,
-        ease: 'power3.out',
-        duration: 1,
+        ease: 'power2.out',
+        duration: 0.8,
         scrollTrigger: {
-          trigger: '.composition-split',
-          start: 'top 75%',
+          trigger: '.featured-carousel',
+          start: 'top 80%',
           toggleActions: 'play none none none'
         }
       });
-
     }
 
     // --- Portrait statement — clip-path wipe reveal ---
@@ -348,6 +347,33 @@
       });
     });
 
+    // --- Commission CTA reveal — heading fades in without movement (confident) ---
+    if (document.querySelector('.commission-cta-section')) {
+      gsap.from('.commission-cta-section h2', {
+        opacity: 0,
+        ease: 'power3.out',
+        duration: 1,
+        scrollTrigger: {
+          trigger: '.commission-cta-section',
+          start: 'top 70%',
+          toggleActions: 'play none none none'
+        }
+      });
+
+      gsap.from('.commission-cta-section p, .commission-cta-section .btn-primary', {
+        opacity: 0,
+        y: 15,
+        ease: 'power3.out',
+        duration: 0.8,
+        stagger: 0.2,
+        scrollTrigger: {
+          trigger: '.commission-cta-section',
+          start: 'top 65%',
+          toggleActions: 'play none none none'
+        }
+      });
+    }
+
     // --- Contact minimal fade ---
     if (document.querySelector('.contact-minimal')) {
       gsap.from('.contact-minimal__inner', {
@@ -382,6 +408,124 @@
     revealElements.forEach(function (el) {
       revealObserver.observe(el);
     });
+  }
+
+
+  /* ============================================
+     HOMEPAGE FEATURED CAROUSEL
+     Peek layout: adjacent slides bleed beyond stage edges.
+     Active = centre (x:0), peek = ±102% of stage width.
+     Auto-advances every 5s. Pauses on hover. Swipe on mobile.
+     ============================================ */
+  var carouselStage = document.querySelector('.featured-carousel__stage');
+  if (carouselStage) {
+    var csSlides = Array.from(carouselStage.querySelectorAll('.carousel-slide'));
+    var csDots = Array.from(document.querySelectorAll('.carousel-dot'));
+    var csTitleEl = document.querySelector('.carousel-title');
+    var csMetaEl = document.querySelector('.carousel-meta');
+    var csCurrentIdx = 0;
+    var csAnimating = false;
+    var csTimer = null;
+    var CS_INTERVAL = 5000;
+    var CS_PEEK = 105;    // percent: how far peek slides sit beyond stage edge
+    var CS_DUR  = 0.65;   // transition duration in seconds
+    var N = csSlides.length;
+
+    // Positions for 3 slides: centre, right-peek, left-peek
+    // (csCurrentIdx+1)%N is always the right peek; (csCurrentIdx+2)%N is always left
+    function csXFor(slideIdx) {
+      var diff = ((slideIdx - csCurrentIdx) % N + N) % N;
+      if (diff === 0)           return 0;
+      if (diff === 1)           return CS_PEEK;   // next (right)
+      return -CS_PEEK;                             // prev  (left)
+    }
+
+    function csOpacityFor(slideIdx) {
+      return slideIdx === csCurrentIdx ? 1 : 0.38;
+    }
+
+    // Set initial positions
+    csSlides.forEach(function (slide, i) {
+      gsap.set(slide, { x: csXFor(i) + '%', opacity: csOpacityFor(i), zIndex: i === 0 ? 2 : 1 });
+    });
+
+    function csGoTo(newIdx) {
+      if (newIdx === csCurrentIdx || csAnimating) return;
+      csAnimating = true;
+
+      var oldIdx = csCurrentIdx;
+      var otherIdx = N - oldIdx - newIdx; // the uninvolved third slide (for N=3)
+      var goingRight = (((newIdx - oldIdx) % N + N) % N) === 1;
+
+      csCurrentIdx = newIdx;
+
+      // The "other" slide: snap it to its new peek position instantly
+      // (it's off-centre, so the snap is imperceptible to the viewer)
+      gsap.set(csSlides[otherIdx], {
+        x: (goingRight ? CS_PEEK : -CS_PEEK) + '%',
+        opacity: 0.38,
+        zIndex: 1
+      });
+
+      // Animate: old active exits to the opposite peek
+      gsap.to(csSlides[oldIdx], {
+        x: (goingRight ? -CS_PEEK : CS_PEEK) + '%',
+        opacity: 0.38,
+        zIndex: 1,
+        duration: CS_DUR,
+        ease: 'power2.inOut'
+      });
+
+      // Animate: new active slides in from its current peek position
+      gsap.to(csSlides[newIdx], {
+        x: '0%',
+        opacity: 1,
+        zIndex: 2,
+        duration: CS_DUR,
+        ease: 'power2.inOut',
+        onComplete: function () { csAnimating = false; }
+      });
+
+      // Update dots
+      csDots[oldIdx].classList.remove('is-active');
+      csDots[oldIdx].setAttribute('aria-selected', 'false');
+      csDots[newIdx].classList.add('is-active');
+      csDots[newIdx].setAttribute('aria-selected', 'true');
+
+      // Update caption
+      if (csTitleEl) csTitleEl.textContent = csSlides[newIdx].dataset.title || '';
+      if (csMetaEl)  csMetaEl.innerHTML    = csSlides[newIdx].dataset.meta  || '';
+    }
+
+    function csNext() { csGoTo((csCurrentIdx + 1) % N); }
+    function csPrev() { csGoTo((csCurrentIdx - 1 + N) % N); }
+
+    function csStartAuto() { csStopAuto(); csTimer = setInterval(csNext, CS_INTERVAL); }
+    function csStopAuto()  { if (csTimer) { clearInterval(csTimer); csTimer = null; } }
+
+    // Dot click nav
+    csDots.forEach(function (dot, i) {
+      dot.addEventListener('click', function () { csGoTo(i); csStopAuto(); csStartAuto(); });
+    });
+
+    // Pause on hover
+    carouselStage.addEventListener('mouseenter', csStopAuto);
+    carouselStage.addEventListener('mouseleave', csStartAuto);
+
+    // Swipe support for mobile
+    var csTouchStartX = 0;
+    carouselStage.addEventListener('touchstart', function (e) {
+      csTouchStartX = e.changedTouches[0].clientX;
+    }, { passive: true });
+    carouselStage.addEventListener('touchend', function (e) {
+      var delta = e.changedTouches[0].clientX - csTouchStartX;
+      if (Math.abs(delta) > 40) {
+        delta < 0 ? csNext() : csPrev();
+        csStopAuto(); csStartAuto();
+      }
+    }, { passive: true });
+
+    csStartAuto();
   }
 
 

@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lillico Art — Original Portraits &amp; Fine Art Commissions</title>
-  <meta name="description" content="Lillico Art creates original hand-drawn portraits and fine art commissions in charcoal, graphite, and mixed media. Based in Suffolk, UK.">
-  <meta property="og:title" content="Lillico Art — Original Portraits &amp; Fine Art Commissions">
-  <meta property="og:description" content="Original hand-drawn portraits and fine art commissions in charcoal, graphite, and mixed media. Based in Suffolk, UK.">
+  <title>Esme Lillico — Charcoal Portrait Artist, Suffolk</title>
+  <meta name="description" content="Hand-drawn charcoal and graphite portraits by Esme Lillico, based in Suffolk. Taking commissions across East Anglia — Ipswich, Cambridge, Colchester and beyond.">
+  <meta property="og:title" content="Esme Lillico — Charcoal Portrait Artist, Suffolk">
+  <meta property="og:description" content="Hand-drawn charcoal and graphite portraits by Esme Lillico, based in Suffolk. Taking commissions across East Anglia — Ipswich, Cambridge, Colchester and beyond.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://www.lillicoart.com">
   <meta property="og:image" content="https://www.lillicoart.com/includes/Images/masculinity.webp">
@@ -38,6 +38,7 @@
   </style>
 
   <meta name="theme-color" content="#0d0d0d">
+  <link rel="canonical" href="https://www.lillicoart.com/">
   <link rel="sitemap" type="application/xml" href="/sitemap.xml">
   <link rel="icon" href="includes/Images/Favicon.webp" type="image/webp">
   <link rel="apple-touch-icon" href="includes/Images/Favicon.webp">
@@ -57,28 +58,30 @@
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": "Lillico Art",
-    "description": "Original hand-drawn portraits and fine art commissions in charcoal, graphite, and mixed media.",
+    "description": "Hand-drawn charcoal and graphite portrait commissions by Esme Lillico, based in Suffolk, UK.",
     "url": "https://www.lillicoart.com",
     "image": "https://www.lillicoart.com/includes/Images/masculinity.webp",
-    "priceRange": "$$",
+    "priceRange": "££",
+    "email": "lilli.co.art@gmail.com",
     "address": {
       "@type": "PostalAddress",
+      "addressRegion": "Suffolk",
       "addressCountry": "GB"
     },
+    "areaServed": [
+      { "@type": "City", "name": "Ipswich" },
+      { "@type": "City", "name": "Bury St Edmunds" },
+      { "@type": "City", "name": "Colchester" },
+      { "@type": "City", "name": "Cambridge" },
+      { "@type": "AdministrativeArea", "name": "Suffolk" },
+      { "@type": "AdministrativeArea", "name": "Norfolk" }
+    ],
+    "knowsAbout": ["charcoal portraiture", "graphite drawing", "portrait commissions", "fine art"],
     "sameAs": [
       "https://www.instagram.com/lillicoart"
     ]
   }
   </script>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7GD6ZW9TJY"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-7GD6ZW9TJY');
-</script>
 </head>
 <body class="home">
 
@@ -103,35 +106,65 @@
   </nav>
 
   <!-- HERO — Full viewport, portrait emerging from black -->
-  <section class="hero">
+  <section class="hero hero--home">
     <img src="includes/Images/masculinity.webp" width="1400" height="972" alt="Masculinity — charcoal portrait, softness as strength, tenderness and bloom" class="hero-image" fetchpriority="high" decoding="async">
+    <div class="hero-vignette" aria-hidden="true"></div>
     <div class="hero-gradient"></div>
     <div class="hero-content">
       <p class="hero-eyebrow">Charcoal Portraiture &middot; Suffolk</p>
+      <div class="hero-rule" aria-hidden="true"></div>
       <h1 class="hero-title">Drawn.</h1>
     </div>
   </section>
 
-  <!-- COMPOSITION SPLIT — Horizontal tension -->
-  <section class="composition-split">
-    <div class="composition-split__text">
-      <h2 class="composition-heading">
-        Drawn from<br>observation.<br>
-        <em>Made to last.</em>
-      </h2>
+  <!-- FEATURED CAROUSEL — One piece at a time, auto-advancing -->
+  <section class="featured-carousel">
+    <div class="featured-carousel__header">
+      <p class="label">Selected Work</p>
     </div>
-    <div class="composition-split__image">
-      <img src="includes/Images/sovereign.webp" width="999" height="1400" alt="Sovereign — charcoal portrait, a meditation on identity and adornment" loading="lazy" decoding="async">
+
+    <div class="featured-carousel__stage">
+      <div class="carousel-slide is-active"
+           data-title="Sovereign"
+           data-meta="Charcoal on paper &middot; 84&times;60cm">
+        <img src="includes/Images/sovereign.webp" width="999" height="1400" alt="Sovereign — charcoal portrait, a meditation on identity and adornment" loading="lazy" decoding="async">
+      </div>
+      <div class="carousel-slide"
+           data-title="Crowned"
+           data-meta="Charcoal on paper &middot; 84&times;60cm">
+        <img src="includes/Images/crowned.webp" width="1014" height="1400" alt="Crowned — charcoal profile study exploring texture and form" loading="lazy" decoding="async">
+      </div>
+      <div class="carousel-slide"
+           data-title="A Grandfather&rsquo;s Hands"
+           data-meta="Charcoal on paper &middot; 60&times;60cm">
+        <img src="includes/Images/a-grandfathers-hands.webp" width="1252" height="1400" alt="A Grandfather's Hands — charcoal drawing, generations held in a single gesture" loading="lazy" decoding="async">
+      </div>
+    </div>
+
+    <div class="carousel-info">
+      <div class="carousel-caption">
+        <span class="portrait-title carousel-title">Sovereign</span>
+        <span class="label carousel-meta" style="margin-bottom:0;">Charcoal on paper &middot; 84&times;60cm</span>
+      </div>
+      <div class="carousel-dots" role="tablist" aria-label="Select artwork">
+        <button class="carousel-dot is-active" role="tab" aria-selected="true" aria-label="Sovereign"></button>
+        <button class="carousel-dot" role="tab" aria-selected="false" aria-label="Crowned"></button>
+        <button class="carousel-dot" role="tab" aria-selected="false" aria-label="A Grandfather's Hands"></button>
+      </div>
+    </div>
+
+    <div class="featured-work__footer">
+      <a href="gallery.html" class="btn-primary">View the full gallery</a>
     </div>
   </section>
 
-  <!-- THE ARTIST — Introduction -->
+  <!-- ARTIST STATEMENT -->
   <section class="text-interruption">
     <div class="text-interruption__inner">
       <p class="label">The Artist</p>
       <h2>Esme Lillico.</h2>
-      <p>I work in charcoal and graphite because nothing else gives me the same range - from the deepest black to the softest whisper of grey, every tone between light and shadow is there to be found. That range lets me chase what I'm really after: the quiet, unguarded moments that reveal who someone is.</p>
-      <p>Every portrait I draw is a conversation between mark and meaning. I'm drawn to identity, intimacy, and the stories that sit just beneath the surface - a glance held a beat too long, the weight of a resting hand, the way light falls across a face when no one thinks they're being watched.</p>
+      <p>I work in charcoal and graphite because nothing else gives me the same range — from the deepest black to the softest whisper of grey. That range lets me chase what I'm really after: the quiet, unguarded moments that reveal who someone truly is.</p>
+      <p>My work has been exhibited in galleries in Halifax and Sheffield, and featured internationally in <em>[Magazine Name]</em>. Every portrait I draw is a conversation between mark and meaning — identity, intimacy, and the stories that sit just beneath the surface.</p>
     </div>
   </section>
 
@@ -144,6 +177,7 @@
       <div class="portrait-statement__caption">
         <span class="portrait-title">En Pointe</span>
         <span class="label" style="margin-bottom:0;">Charcoal on paper &middot; 60&times;60cm</span>
+        <span class="label portrait-exhibited" style="margin-bottom:0;">Exhibited at Fronteer Gallery, Sheffield</span>
       </div>
     </section>
 
@@ -154,9 +188,23 @@
       <div class="portrait-statement__caption">
         <span class="portrait-title">Adorned</span>
         <span class="label" style="margin-bottom:0;">Charcoal on paper &middot; 60&times;60cm</span>
+        <span class="label portrait-exhibited" style="margin-bottom:0;">Exhibited at Open Gallery, Halifax</span>
       </div>
     </section>
   </div>
+
+  <!-- SECTION DIVIDER -->
+  <div class="section-divider" aria-hidden="true"></div>
+
+  <!-- COMMISSION CTA -->
+  <section class="commission-cta-section">
+    <div class="commission-cta-section__inner">
+      <p class="label">Commissions</p>
+      <h2>Every portrait begins with a conversation.</h2>
+      <p>Whether it's a gift, a memorial, or simply a piece you've imagined for years — I'd love to hear the story behind it. Commissions start from &pound;150.</p>
+      <a href="commissions.html" class="btn-primary">Learn about commissions</a>
+    </div>
+  </section>
 
   <!-- CONTACT -->
   <section class="contact-minimal" id="contact">
@@ -196,6 +244,7 @@
     </div>
   </footer>
 
+  <script defer src="cookie-consent.js"></script>
   <script defer src="navigation.js"></script>
 </body>
 </html>
